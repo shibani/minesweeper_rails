@@ -1,3 +1,106 @@
 // Place all the styles related to the site controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+* {
+	margin:0;
+	padding:0;
+}
+
+body{
+	font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+	position:relative;
+	color: #a9a9a9;
+	font-size:14px;
+	margin: 0 auto 40px auto;
+  text-align:center;
+}
+
+a{
+	text-decoration:none;
+	color: #e60000 !important;
+	font-weight:bold;
+}
+
+u{
+	text-decoration:none;
+}
+
+a:link, a:hover, a:visited, a:active{
+	text-decoration:none;
+}
+
+h1, h2, h3, h4, h5, h6, p, li{
+	margin:0;
+	padding:0;
+	font-weight:normal;
+}
+
+ul{
+	list-style-type: none;
+}
+
+li{}
+
+img, link, input, button{
+	border:0;
+	outline:0
+}
+
+.left{
+	float:left;
+}
+
+.right{
+	float:right;
+}
+
+.clear{
+	clear:both;
+}
+
+.show{
+	display:block;
+}
+
+.hide{
+	display:none
+}
+
+textarea {
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+input{
+  color: #a9a9a9;
+}
+
+section.container{
+  width: 60%;
+  margin: 100px auto;
+  border: 0px;
+
+  h1{
+    margin: 30px auto;
+  }
+
+  .form-container{
+    width:60%;
+    margin: 0 auto 30px auto;
+
+    .row{
+      width:100%;
+      display:flex;
+      justify-content:flex-start;
+    }
+    .cell{
+      border: 1px solid #a9a9a9;
+      width:40px;
+      height:35px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+  }
+}
