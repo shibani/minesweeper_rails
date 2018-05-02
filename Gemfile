@@ -1,5 +1,3 @@
-# frozen_string_literal:true
-
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -71,9 +69,9 @@ group :test, :development do
   gem 'rspec-rails', '> 3.5.0', '<= 3.7.0'
 end
 
-#gem 'minesweeper_2pl', :git => 'https://github.com/shibani/minesweeper_2pl'
+gem 'minesweeper_2pl', :git => 'https://github.com/shibani/minesweeper_2pl'
 
-gem 'minesweeper_2pl', path: '~/Documents/projects/minesweeper_2pl'
+# gem 'minesweeper_2pl', path: '~/Documents/projects/minesweeper_2pl'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 # gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
