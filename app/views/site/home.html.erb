@@ -3,17 +3,19 @@
   <h1><%= @header %></h1>
 
   <div class="form-container">
-    <%= form_with url: site_home_path do |form|%>
       <% @board.each do |row| %>
         <div class="row">
         <% row.each do |cell| %>
           <div class='cell'>
-            <input type='submit' name='content' value='<%= cell %>'  />
+            <%= form_with url: site_home_path do |f|%>
+            <%= f.hidden_field :content, value: cell[1] %>
+            <%= f.hidden_field :index, value: cell[0] %>
+            <%= f.submit '', {class: "cell-submit"}  %>
+            <% end %>
           </div><!-- end cell -->
         <% end %>
       </div><!-- end row -->
       <% end %>
-    <% end %>
   </div><!-- end form_container -->
 
 </section>

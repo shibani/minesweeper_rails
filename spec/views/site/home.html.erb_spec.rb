@@ -10,7 +10,7 @@ RSpec.describe 'site/home.html.erb', type: :view do
     expect(page).to have_content('WELCOME TO MINESWEEPER')
   end
 
-  it 'should have 10x10 board' do
+  it 'should have a board with bombs' do
     expect(page).to have_tag('input', value: 'B')
   end
 

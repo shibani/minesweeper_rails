@@ -72,7 +72,8 @@ RSpec.describe SiteController, type: :controller do
   end
 
   describe 'post #home' do
-    subject { post 'home', params: { content: 'B' } }
+    subject { post 'home', params: { 'content': 'B', 'index': '36' } }
+
     it 'redirects to the gameover template' do
       expect(subject).to redirect_to '/gameover'
     end
@@ -80,7 +81,6 @@ RSpec.describe SiteController, type: :controller do
 
   describe 'get #gameover' do
     subject { get :gameover }
-
     it 'renders the gameover template' do
       expect(subject).to render_template(:gameover)
     end

@@ -10,20 +10,17 @@ class SiteController < ApplicationController
     positions = game.board_positions
     row_size = game.row_size
     @board = []
-    positions.each_slice(row_size) do |row|
+    positions.each_slice(row_size).with_index do |row, row_index|
       row_array = []
-      row.each do |cell|
+      row.each_with_index do |cell, cell_index|
         content = cell == 'B' ? cell : '-'
-        row_array << content
+        cell_position = row_index * row_size + cell_index
+        row_array << [cell_position, content]
       end
       @board << row_array
     end
     if request.post?
-      if params[:content] == 'B'
-        redirect_to gameover_path
-      else
-        @game.place_move([3, 2, 'move'])
-      end
+      redirect_to gameover_path if params[:content] == 'B'
     elsif request.patch?
       logger.debug 'patch'.inspect
     end
