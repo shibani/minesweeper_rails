@@ -1,0 +1,15 @@
+current directory: /Users/shibani/Documents/projects/minesweeper_rails/vendor/bundle/ruby/2.4.0/gems/bindex-0.5.0/ext/bindex
+/Users/shibani/.rvm/rubies/ruby-2.4.4/bin/ruby -r ./siteconf20180502-69137-olkqdf.rb extconf.rb
+creating Makefile
+
+current directory: /Users/shibani/Documents/projects/minesweeper_rails/vendor/bundle/ruby/2.4.0/gems/bindex-0.5.0/ext/bindex
+make "DESTDIR=" clean
+
+current directory: /Users/shibani/Documents/projects/minesweeper_rails/vendor/bundle/ruby/2.4.0/gems/bindex-0.5.0/ext/bindex
+make "DESTDIR="
+compiling cruby.c
+linking shared-object bindex/cruby.bundle
+
+current directory: /Users/shibani/Documents/projects/minesweeper_rails/vendor/bundle/ruby/2.4.0/gems/bindex-0.5.0/ext/bindex
+make "DESTDIR=" install
+/usr/local/opt/coreutils/bin/ginstall -c -m 0755 cruby.bundle ./.gem.20180502-69137-1m5h9l5/bindex

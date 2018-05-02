@@ -1,0 +1,15 @@
+current directory: /Users/shibani/Documents/projects/minesweeper_rails/vendor/bundle/ruby/2.4.0/gems/websocket-driver-0.7.0/ext/websocket-driver
+/Users/shibani/.rvm/rubies/ruby-2.4.4/bin/ruby -r ./siteconf20180502-69137-1a626vf.rb extconf.rb
+creating Makefile
+
+current directory: /Users/shibani/Documents/projects/minesweeper_rails/vendor/bundle/ruby/2.4.0/gems/websocket-driver-0.7.0/ext/websocket-driver
+make "DESTDIR=" clean
+
+current directory: /Users/shibani/Documents/projects/minesweeper_rails/vendor/bundle/ruby/2.4.0/gems/websocket-driver-0.7.0/ext/websocket-driver
+make "DESTDIR="
+compiling websocket_mask.c
+linking shared-object websocket_mask.bundle
+
+current directory: /Users/shibani/Documents/projects/minesweeper_rails/vendor/bundle/ruby/2.4.0/gems/websocket-driver-0.7.0/ext/websocket-driver
+make "DESTDIR=" install
+/usr/local/opt/coreutils/bin/ginstall -c -m 0755 websocket_mask.bundle ./.gem.20180502-69137-q67ake
