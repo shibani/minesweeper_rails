@@ -20,10 +20,10 @@ RSpec.describe SiteController, type: :controller do
       expect(response.content_type).to eq 'text/html'
     end
 
-    it 'assigns a cli' do
-      cli = create_cli
+    it 'assigns a ui' do
+      ui = create_interface
       get :home
-      expect(cli).to be_instance_of(Minesweeper::CLI)
+      expect(ui).to be(Minesweeper::Messages)
     end
 
     it 'prints Welcome' do
@@ -33,7 +33,7 @@ RSpec.describe SiteController, type: :controller do
 ===========================================
 
 '
-      expect(Minesweeper::CLI.new.welcome).to eq(string)
+      expect(Minesweeper::Messages.welcome).to eq(string)
     end
 
     it 'assigns game' do
@@ -86,9 +86,9 @@ RSpec.describe SiteController, type: :controller do
     end
 
     it 'prints the win or lose message' do
-      cli = create_cli
+      ui = create_interface
       get :gameover
-      message = cli.show_game_over_message('lose')
+      message = ui.show_game_over_message('lose')
       expect(message).to eq('Game over! You lose.')
     end
   end

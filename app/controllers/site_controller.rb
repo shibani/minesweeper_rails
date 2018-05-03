@@ -4,8 +4,8 @@ class SiteController < ApplicationController
   include Helpers
 
   def home
-    cli = create_cli
-    @header = display_header(cli)
+    ui = create_interface
+    @header = display_header(ui)
     game = create_game(10, 10)
     @board = build_board_view(game)
     if request.post?
@@ -16,8 +16,8 @@ class SiteController < ApplicationController
   end
 
   def gameover
-    cli = create_cli
-    @message = cli.show_game_over_message('lose')
+    ui = create_interface
+    @message = ui.show_game_over_message('lose')
     render :gameover
   end
 end

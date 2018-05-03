@@ -1,16 +1,16 @@
 module Helpers
   extend ActiveSupport::Concern
 
-  def create_cli
-    Minesweeper::CLI.new
+  def create_interface
+    Minesweeper::Messages
   end
 
   def create_game(row_size, bomb_count)
     Minesweeper::Game.new(row_size, bomb_count)
   end
 
-  def display_header(cli)
-    cli.welcome.tr('=', ' ')
+  def display_header(ui)
+    ui.welcome.tr('=', ' ')
   end
 
   def build_board_view(game)
