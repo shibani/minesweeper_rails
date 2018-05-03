@@ -7,18 +7,7 @@ class SiteController < ApplicationController
     cli = create_cli
     @header = display_header(cli)
     game = create_game(10, 10)
-    positions = game.board_positions
-    row_size = game.row_size
-    @board = []
-    positions.each_slice(row_size).with_index do |row, row_index|
-      row_array = []
-      row.each_with_index do |cell, cell_index|
-        content = cell == 'B' ? cell : '-'
-        cell_position = row_index * row_size + cell_index
-        row_array << [cell_position, content]
-      end
-      @board << row_array
-    end
+    @board = build_board_view(game)
     if request.post?
       redirect_to gameover_path if params[:content] == 'B'
     elsif request.patch?
