@@ -69,7 +69,7 @@ group :test, :development do
   gem 'rspec-rails', '> 3.5.0', '<= 3.7.0'
 end
 
-gem 'minesweeper_2pl', git: 'https://github.com/shibani/minesweeper_2pl'
+gem 'minesweeper_2pl', git: 'https://github.com/shibani/minesweeper_2pl', branch: 'master'
 
 # gem 'minesweeper_2pl', path: '~/Documents/projects/minesweeper_2pl'
 

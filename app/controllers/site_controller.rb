@@ -4,14 +4,17 @@ class SiteController < ApplicationController
   include Helpers
 
   def home
+    game = create_game(10, 10)
     ui = create_interface
     @header = display_header(ui)
-    game = create_game(10, 10)
     @board = build_board_view(game)
     if request.post?
-      redirect_to gameover_path if params[:content] == 'B'
+      if params[:content] == 'B'
+        @board = build_board_view(game)
+      end
     elsif request.patch?
       logger.debug 'patch'.inspect
+    else
     end
   end
 
