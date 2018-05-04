@@ -9,12 +9,9 @@ class SiteController < ApplicationController
     @header = display_header(ui)
     @board = build_board_view(game)
     if request.post?
-      if params[:content] == 'B'
-        @board = build_board_view(game)
-      end
+      redirect_to gameover_path if params[:content] == 'B'
     elsif request.patch?
       logger.debug 'patch'.inspect
-    else
     end
   end
 
