@@ -78,18 +78,4 @@ RSpec.describe SiteController, type: :controller do
       expect(subject).to redirect_to '/gameover'
     end
   end
-
-  describe 'get #gameover' do
-    subject { get :gameover }
-    it 'renders the gameover template' do
-      expect(subject).to render_template(:gameover)
-    end
-
-    it 'prints the win or lose message' do
-      ui = create_interface
-      get :gameover
-      message = ui.show_game_over_message('lose')
-      expect(message).to eq('Game over! You lose.')
-    end
-  end
 end

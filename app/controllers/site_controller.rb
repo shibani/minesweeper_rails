@@ -4,20 +4,27 @@ class SiteController < ApplicationController
   include Helpers
 
   def home
-    game = create_game(10, 10)
-    ui = create_interface
-    @header = display_header(ui)
-    @board = build_board_view(game)
     if request.post?
-      redirect_to gameover_path if params[:content] == 'B'
-    elsif request.patch?
-      logger.debug 'patch'.inspect
+      game_positions = params[:positions].split(",")
+      logger.debug game_positions.size
+      game_row_size = params[:rowsize].to_i
+      ui = create_interface
+      #game.place move(move)
+      #game.board_positions
+      if params[:content] == 'B'
+        @header = ui.show_game_over_message('lose')
+        @board = show_bomb_view(game_positions, game_row_size)
+      else
+        @board = build_board_view(game_positions, game_row_size)
+      end
+    else
+      game = create_game(10, 10)
+      ui = create_interface
+      @header = display_header(ui)
+      positions = game.board_positions
+      @positions_to_string = positions.join(",")
+      @rowsize = game.row_size
+      @board = build_board_view(positions, @rowsize)
     end
-  end
-
-  def gameover
-    ui = create_interface
-    @message = ui.show_game_over_message('lose')
-    render :gameover
   end
 end

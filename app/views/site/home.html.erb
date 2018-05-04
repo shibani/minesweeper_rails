@@ -10,7 +10,9 @@
             <%= form_with url: site_home_path do |f|%>
             <%= f.hidden_field :content, value: cell[1] %>
             <%= f.hidden_field :index, value: cell[0] %>
-            <%= f.submit cell[1], {class: "cell-submit"}  %>
+            <%= f.hidden_field :positions, value: @positions_to_string %>
+            <%= f.hidden_field :rowsize, value: @rowsize %>
+            <%= f.submit cell[2], {class: "cell-submit"}  %>
             <% end %>
           </div><!-- end cell -->
         <% end %>
