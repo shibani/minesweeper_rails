@@ -6,7 +6,6 @@ class SiteController < ApplicationController
   def home
     if request.post?
       game_positions = params[:positions].split(",")
-      logger.debug game_positions.size
       game_row_size = params[:rowsize].to_i
       ui = create_interface
       #game.place move(move)
@@ -18,12 +17,13 @@ class SiteController < ApplicationController
         @board = build_board_view(game_positions, game_row_size)
       end
     else
-      game = create_game(10, 10)
+      #@book = Book.new(session[:book])
+      session[:game] = create_game(10, 10)
       ui = create_interface
       @header = display_header(ui)
-      positions = game.board_positions
+      positions = session[:game].board_positions
       @positions_to_string = positions.join(",")
-      @rowsize = game.row_size
+      @rowsize = session[:game].row_size
       @board = build_board_view(positions, @rowsize)
     end
   end

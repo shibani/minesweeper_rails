@@ -26,7 +26,7 @@ RSpec.describe SiteController, type: :controller do
       expect(ui).to be(Minesweeper::Messages)
     end
 
-    it 'prints Welcome' do
+    it 'sends the welcome message to the view' do
       string = '
 ===========================================
            WELCOME TO MINESWEEPER
@@ -42,40 +42,66 @@ RSpec.describe SiteController, type: :controller do
       expect(game).to be_instance_of(Minesweeper::Game)
     end
 
-    it 'assigns game board' do
+    it 'game has expected row_size' do
       game = create_game(10, 10)
-      board = game.board
       get :home
-      expect(board).to be_instance_of(Minesweeper::Board)
+      expect(game.row_size).to be(10)
     end
 
-    it 'game board has expected row_size' do
+    it 'game has expected bomb_count' do
       game = create_game(10, 10)
-      board = game.board
       get :home
-      expect(board.row_size).to be(10)
+      expect(game.bomb_count).to be(10)
     end
 
-    it 'game board has expected bomb_count' do
+    it 'game has expected number of positions' do
       game = create_game(10, 10)
-      board = game.board
       get :home
-      expect(board.bomb_count).to be(10)
-    end
-
-    it 'game board has expected number of positions' do
-      game = create_game(10, 10)
-      board = game.board
-      get :home
-      expect(board.size).to be(100)
+      expect(game.board_positions.size).to be(100)
     end
   end
 
   describe 'post #home' do
-    subject { post 'home', params: { 'content': 'B', 'index': '36' } }
+    params = { 'content': 'B', 'index': '1', 'rowsize'=>'4', 'positions': ' ,B, , , , , , , , , , , , , , '}
 
-    # it 'redirects to the gameover template' do
-    #   expect(subject).to redirect_to '/gameover'
-    # end
+    params1 = { 'content': '-', 'index': '1', 'rowsize'=>'4', 'positions': ' , , , , , , , , , , , , , , , '}
+
+    it 'returns a 200 OK status' do
+      post :home, params: params
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'renders the home template' do
+      post :home, params: params
+      expect(response).to render_template(:home)
+    end
+
+    it 'shows the game over message' do
+      post :home, params: params
+      expect(assigns(:header)).to eq('Game over! You lose.')
+    end
+
+    it 'can show bombs if move is a bomb' do
+      post :home, params: params
+      row_array = [
+        [[0, ' ', ' '], [1, "\u{1f4a3}", "\u{1f4a3}"], [2, ' ', ' '], [3, ' ', ' ']],
+        [[4, ' ', ' '], [5, ' ', ' '], [6, ' ', ' '], [7, ' ', ' ']],
+        [[8, ' ', ' '], [9, ' ', ' '], [10, ' ', ' '], [11, ' ', ' ']],
+        [[12, ' ', ' '], [13, ' ', ' '], [14, ' ', ' '], [15, ' ', ' ']]
+      ]
+      expect(assigns(:board)).to eq(row_array)
+    end
+
+    it 'does not show bombs if move is not a bomb' do
+      post :home, params: params1
+      row_array = [
+        [[0, '-', '-'], [1, '-', '-'], [2, '-', '-'], [3, '-', '-']],
+        [[4, '-', '-'], [5, '-', '-'], [6, '-', '-'], [7, '-', '-']],
+        [[8, '-', '-'], [9, '-', '-'], [10, '-', '-'], [11, '-', '-']],
+        [[12, '-', '-'], [13, '-', '-'], [14, '-', '-'], [15, '-', '-']]
+      ]
+      cell_array = [1, "\u{1f4a3}", "\u{1f4a3}"]
+      expect(assigns(:board)).to eq(row_array)
+    end
   end
 end
