@@ -66,6 +66,8 @@ RSpec.describe SiteController, type: :controller do
 
     params1 = { 'content': '-', 'index': '1', 'rowsize'=>'4', 'positions': ' , , , , , , , , , , , , , , , '}
 
+    params2 = { 'content': '-', 'index': '11', 'rowsize'=>'4', 'positions': ' , , , , , , , , , , , , , , , '}
+
     it 'returns a 200 OK status' do
       post :home, params: params
       expect(response).to have_http_status(:ok)
@@ -84,10 +86,10 @@ RSpec.describe SiteController, type: :controller do
     it 'can show bombs if move is a bomb' do
       post :home, params: params
       row_array = [
-        [[0, ' ', ' '], [1, "\u{1f4a3}", "\u{1f4a3}"], [2, ' ', ' '], [3, ' ', ' ']],
-        [[4, ' ', ' '], [5, ' ', ' '], [6, ' ', ' '], [7, ' ', ' ']],
-        [[8, ' ', ' '], [9, ' ', ' '], [10, ' ', ' '], [11, ' ', ' ']],
-        [[12, ' ', ' '], [13, ' ', ' '], [14, ' ', ' '], [15, ' ', ' ']]
+        [[0, '-', '-'], [1, "\u{1f4a3}", "\u{1f4a3}"], [2, '-', '-'], [3, '-', '-']],
+        [[4, '-', '-'], [5, '-', '-'], [6, '-', '-'], [7, '-', '-']],
+        [[8, '-', '-'], [9, '-', '-'], [10, '-', '-'], [11, '-', '-']],
+        [[12, '-', '-'], [13, '-', '-'], [14, '-', '-'], [15, '-', '-']]
       ]
       expect(assigns(:board)).to eq(row_array)
     end
@@ -95,12 +97,22 @@ RSpec.describe SiteController, type: :controller do
     it 'does not show bombs if move is not a bomb' do
       post :home, params: params1
       row_array = [
-        [[0, '-', '-'], [1, '-', '-'], [2, '-', '-'], [3, '-', '-']],
+        [[0, '-', '-'], [1, 'X', 'X'], [2, '-', '-'], [3, '-', '-']],
         [[4, '-', '-'], [5, '-', '-'], [6, '-', '-'], [7, '-', '-']],
         [[8, '-', '-'], [9, '-', '-'], [10, '-', '-'], [11, '-', '-']],
         [[12, '-', '-'], [13, '-', '-'], [14, '-', '-'], [15, '-', '-']]
       ]
-      cell_array = [1, "\u{1f4a3}", "\u{1f4a3}"]
+      expect(assigns(:board)).to eq(row_array)
+    end
+
+    it 'marks the move if position is not a bomb' do
+      post :home, params: params2
+      row_array = [
+        [[0, '-', '-'], [1, '-', '-'], [2, '-', '-'], [3, '-', '-']],
+        [[4, '-', '-'], [5, '-', '-'], [6, '-', '-'], [7, '-', '-']],
+        [[8, '-', '-'], [9, '-', '-'], [10, '-', '-'], [11, 'X', 'X']],
+        [[12, '-', '-'], [13, '-', '-'], [14, '-', '-'], [15, '-', '-']]
+      ]
       expect(assigns(:board)).to eq(row_array)
     end
   end

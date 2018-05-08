@@ -12,7 +12,7 @@
             <%= f.hidden_field :index, value: cell[0] %>
             <%= f.hidden_field :positions, value: @positions_to_string %>
             <%= f.hidden_field :rowsize, value: @rowsize %>
-            <%= f.submit cell[2], {class: "cell-submit"}  %>
+            <%= f.submit cell[2], class: "cell-submit", disabled: @disable_submit %>
             <% end %>
           </div><!-- end cell -->
         <% end %>

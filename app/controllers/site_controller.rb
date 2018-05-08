@@ -5,26 +5,32 @@ class SiteController < ApplicationController
 
   def home
     if request.post?
-      game_positions = params[:positions].split(",")
-      game_row_size = params[:rowsize].to_i
+      game_positions = params[:positions].split(',')
+      @rowsize = params[:rowsize].to_i
+      index = params[:index]
       ui = create_interface
       #game.place move(move)
       #game.board_positions
       if params[:content] == 'B'
+        positions = show_bombs(game_positions)
         @header = ui.show_game_over_message('lose')
-        @board = show_bomb_view(game_positions, game_row_size)
+        @disable_submit = true
+      elsif params[:content] == '-'
+        positions = show_user_move(game_positions, index)
       else
-        @board = build_board_view(game_positions, game_row_size)
+        positions = show_user_move(game_positions, index)
       end
+      @board = build_board_view(positions, @rowsize)
+      @positions_to_string = positions.join(',')
     else
-      #@book = Book.new(session[:book])
-      session[:game] = create_game(10, 10)
+      game = create_game(10, 10)
       ui = create_interface
       @header = display_header(ui)
-      positions = session[:game].board_positions
-      @positions_to_string = positions.join(",")
-      @rowsize = session[:game].row_size
-      @board = build_board_view(positions, @rowsize)
+      positions = game.board_positions
+      @positions_to_string = positions.join(',')
+      @rowsize = game.row_size
+      board = setup_board(positions)
+      @board = build_board_view(board, @rowsize)
     end
   end
 end

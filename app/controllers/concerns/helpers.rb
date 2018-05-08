@@ -13,33 +13,42 @@ module Helpers
     ui.welcome.tr('=', ' ')
   end
 
-  def build_board_view(positions, row_size)
-    board = []
-    positions.each_slice(row_size).with_index do |row, row_index|
-      row_array = []
-      row.each_with_index do |cell, cell_index|
-        content = cell == 'B' ? cell : '-'
-        submit_btn = content
-        cell_position = row_index * row_size + cell_index
-        row_array << [cell_position, content, submit_btn]
-      end
-      board << row_array
+  def setup_board(positions)
+    positions.map do |position|
+      ' '
     end
-    board
   end
 
-  def show_bomb_view(positions, row_size)
-    board = []
-    positions.each_slice(row_size).with_index do |row, row_index|
-      row_array = []
-      row.each_with_index do |cell, cell_index|
-        content = cell == 'B' ? "\u{1f4a3}" : ' '
-        cell_position = row_index * row_size + cell_index
-        submit_btn = content
-        row_array << [cell_position, content, submit_btn]
+  def show_user_move(positions, index=nil)
+    positions.map.with_index do |position, i|
+      if index && (i == index.to_i)
+        'X'
+      else
+        (['B','X'].include? position) ? position : ' '
       end
-      board << row_array
     end
-    board
+  end
+
+  def show_bombs(positions)
+    positions.map do |position|
+      if position == 'B'
+        "\u{1f4a3}"
+      elsif position == 'X'
+        'X'
+      else
+        ' '
+      end
+    end
+  end
+
+  def build_board_view(board, row_size)
+    board.each_slice(row_size).map.with_index do |row, row_index|
+      row.map.with_index do |cell, cell_index|
+        cell_position = row_index * row_size + cell_index
+        content = cell
+        submit_btn = cell != 'B' ? cell : ' '
+        [cell_position, content, submit_btn]
+      end
+    end
   end
 end
