@@ -3,16 +3,16 @@
   <h1><%= @header %></h1>
 
   <div class="form-container">
-      <% @board.each do |row| %>
+      <% @board.each.with_index do |row, i| %>
         <div class="row">
-        <% row.each do |cell| %>
-          <div class='cell'>
+        <% row.each.with_index do |cell, j| %>
+          <div class='cell <%= "cell_#{i*@rowsize + j}" %>'>
             <%= form_with url: site_home_path do |f|%>
             <%= f.hidden_field :content, value: cell[1] %>
             <%= f.hidden_field :index, value: cell[0] %>
             <%= f.hidden_field :positions, value: @positions_to_string %>
             <%= f.hidden_field :rowsize, value: @rowsize %>
-            <%= f.submit cell[2], class: "cell-submit", data: { disable_with: false }, disabled: @disable_submit %>
+            <%= f.submit cell[2], name: 'submit', class: "cell-submit", id: "submit_#{i*@rowsize + j}", data: { disable_with: false }, disabled: @disable_submit %>
             <% end %>
           </div><!-- end cell -->
         <% end %>
