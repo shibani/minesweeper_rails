@@ -10,8 +10,8 @@ class SiteController < ApplicationController
     positions = game.board_positions
     @positions_to_string = positions.join(',')
     @rowsize = game.row_size
-    board = setup_board(positions)
-    @board = build_board_view(board, @rowsize)
+    board_array = setup_board(positions)
+    @board = build_board_view(board_array, @rowsize)
   end
 
   def update
@@ -19,21 +19,18 @@ class SiteController < ApplicationController
     @rowsize = params[:rowsize].to_i
     user_move = params[:index].to_i
     game = create_game(@rowsize, 0)
-    game.set_positions(game_positions)
-    bomb_array = bomb_positions_in_string(game_positions)
-    game.set_bomb_positions(bomb_array)
     ui = create_interface
-    game.mark_move_on_board(user_move)
-    positions = game.board_positions
+    board_array = update_board(game, game_positions, user_move)
     if game.game_over
-      @board = build_bomb_view(positions, @rowsize)
+      @board = build_bomb_view(board_array, @rowsize)
       @disable_submit = true
       @header = ui.show_game_over_message('lose')
     else
-      @board = build_board_view(positions, @rowsize)
+      @board = build_board_view(board_array, @rowsize)
       @disable_submit = false
     end
-    @positions_to_string = positions.join(',')
+    @positions_to_string = board_array.join(',')
+
     render :home
   end
 end

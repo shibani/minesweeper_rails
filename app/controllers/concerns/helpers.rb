@@ -14,35 +14,19 @@ module Helpers
   end
 
   def setup_board(positions)
-    positions.map do |position|
-      ' '
-    end
+    positions.map { ' ' }
   end
 
-  def show_user_move(positions, index=nil)
-    positions.map.with_index do |position, i|
-      if index && (i == index.to_i)
-        'X'
-      else
-        (['B','X'].include? position) ? position : ' '
-      end
-    end
-  end
-
-  def show_bombs(positions)
-    positions.map do |position|
-      if position == 'B'
-        "\u{1f4a3}"
-      elsif position == 'X'
-        'X'
-      else
-        ' '
-      end
-    end
+  def update_board(game, positions, move)
+    game.set_positions(positions)
+    bomb_array = bomb_positions_in_string(positions)
+    game.set_bomb_positions(bomb_array)
+    game.mark_move_on_board(move)
+    game.board_positions
   end
 
   def bomb_positions_in_string(game_positions)
-    game_positions.each_index.select{|i| game_positions[i] == 'B'}
+    game_positions.each_index.select { |i| game_positions[i] == 'B' }
   end
 
   def build_board_view(board, row_size)
