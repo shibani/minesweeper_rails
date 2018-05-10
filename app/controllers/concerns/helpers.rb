@@ -41,12 +41,27 @@ module Helpers
     end
   end
 
+  def bomb_positions_in_string(game_positions)
+    game_positions.each_index.select{|i| game_positions[i] == 'B'}
+  end
+
   def build_board_view(board, row_size)
     board.each_slice(row_size).map.with_index do |row, row_index|
       row.map.with_index do |cell, cell_index|
         cell_position = row_index * row_size + cell_index
         content = cell
         submit_btn = cell != 'B' ? cell : ' '
+        [cell_position, content, submit_btn]
+      end
+    end
+  end
+
+  def build_bomb_view(board, row_size)
+    board.each_slice(row_size).map.with_index do |row, row_index|
+      row.map.with_index do |cell, cell_index|
+        cell_position = row_index * row_size + cell_index
+        content = cell
+        submit_btn = cell != 'B' ? cell : "\u{1f4a3}"
         [cell_position, content, submit_btn]
       end
     end

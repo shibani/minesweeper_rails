@@ -61,59 +61,56 @@ RSpec.describe SiteController, type: :controller do
     end
   end
 
-  describe 'post #home' do
-    params = { 'content': 'B', 'index': '1', 'rowsize'=>'4', 'positions': ' ,B, , , , , , , , , , , , , , '}
+  describe 'update' do
+    params = { 'content': '0', 'index': '1', 'rowsize'=>'4', 'positions': ' ,B, , , , , , , , , , , , , , '}
 
-    params1 = { 'content': '-', 'index': '1', 'rowsize'=>'4', 'positions': ' , , , , , , , , , , , , , , , '}
+    params1 = { 'content': '0', 'index': '1', 'rowsize'=>'4', 'positions': ' , , , , , , , , , , , , , , , '}
 
-    params2 = { 'content': '-', 'index': '11', 'rowsize'=>'4', 'positions': ' , , , , , , , , , , , , , , , '}
+    params2 = { 'content': '2', 'index': '11', 'rowsize'=>'4', 'positions': 'B,1,X,X,0,0,1,2,B,1,2,2,0,0,0,0'}
+
+    params3 = { 'content': 'B', 'index': '0', 'rowsize'=>'4', 'positions': 'B,1,X,X,0,0,1,2,B,1,2,2,0,0,0,0'}
 
     it 'returns a 200 OK status' do
-      post :home, params: params
+      post :update, params: params
       expect(response).to have_http_status(:ok)
     end
 
     it 'renders the home template' do
-      post :home, params: params
+      post :update, params: params
       expect(response).to render_template(:home)
     end
 
-    it 'shows the game over message' do
-      post :home, params: params
-      expect(assigns(:header)).to eq('Game over! You lose.')
-    end
-
-    it 'can show bombs if move is a bomb' do
-      post :home, params: params
-      row_array = [
-        [[0, ' ', ' '], [1, "\u{1f4a3}", "\u{1f4a3}"], [2, ' ', ' '], [3, ' ', ' ']],
-        [[4, ' ', ' '], [5, ' ', ' '], [6, ' ', ' '], [7, ' ', ' ']],
-        [[8, ' ', ' '], [9, ' ', ' '], [10, ' ', ' '], [11, ' ', ' ']],
-        [[12, ' ', ' '], [13, ' ', ' '], [14, ' ', ' '], [15, ' ', ' ']]
-      ]
-      expect(assigns(:board)).to eq(row_array)
-    end
-
-    it 'does not show bombs if move is not a bomb' do
-      post :home, params: params1
-      row_array = [
-        [[0, ' ', ' '], [1, 'X', 'X'], [2, ' ', ' '], [3, ' ', ' ']],
-        [[4, ' ', ' '], [5, ' ', ' '], [6, ' ', ' '], [7, ' ', ' ']],
-        [[8, ' ', ' '], [9, ' ', ' '], [10, ' ', ' '], [11, ' ', ' ']],
-        [[12, ' ', ' '], [13, ' ', ' '], [14, ' ', ' '], [15, ' ', ' ']]
-      ]
-      expect(assigns(:board)).to eq(row_array)
-    end
-
     it 'marks the move if position is not a bomb' do
-      post :home, params: params2
+      post :update, params: params2
       row_array = [
-        [[0, ' ', ' '], [1, ' ', ' '], [2, ' ', ' '], [3, ' ', ' ']],
-        [[4, ' ', ' '], [5, ' ', ' '], [6, ' ', ' '], [7, ' ', ' ']],
-        [[8, ' ', ' '], [9, ' ', ' '], [10, ' ', ' '], [11, 'X', 'X']],
-        [[12, ' ', ' '], [13, ' ', ' '], [14, ' ', ' '], [15, ' ', ' ']]
+        [[0, 'B', ' '], [1, '1', '1'], [2, 'X', 'X'], [3, 'X', 'X']],
+        [[4, '0', '0'], [5, '0', '0'], [6, '1', '1'], [7, '2', '2']],
+        [[8, 'B', ' '], [9, '1', '1'], [10, '2', '2'], [11, 'X', 'X']],
+        [[12, '0', '0'], [13, '0', '0'], [14, '0', '0'], [15, '0', '0']]
       ]
       expect(assigns(:board)).to eq(row_array)
+    end
+
+    it 'marks the move if position is not a bomb v2' do
+      post :update, params: params2
+
+      expect(assigns(:positions_to_string)).to eq('B,1,X,X,0,0,1,2,B,1,2,X,0,0,0,0')
+    end
+
+    it 'shows the bombs if move is a bomb' do
+      post :update, params: params3
+      row_array = [
+        [[0, 'B', "\u{1f4a3}"], [1, '1', '1'], [2, 'X', 'X'], [3, 'X', 'X']],
+        [[4, '0', '0'], [5, '0', '0'], [6, '1', '1'], [7, '2', '2']],
+        [[8, 'B', "\u{1f4a3}"], [9, '1', '1'], [10, '2', '2'], [11, '2', '2']],
+        [[12, '0', '0'], [13, '0', '0'], [14, '0', '0'], [15, '0', '0']]
+      ]
+      expect(assigns(:board)).to eq(row_array)
+    end
+
+    it 'shows the game over message' do
+      post :update, params: params
+      expect(assigns(:header)).to eq('Game over! You lose.')
     end
   end
 end
