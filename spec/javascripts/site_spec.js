@@ -1,8 +1,8 @@
-describe('testObj', function() {
+describe('boardObj', function() {
 
   beforeEach(function () {
     this.fixture = fixture.load("game_fixture.html", true)
-    spyOn(testObj, 'processFlagClick').and.callThrough();
+    spyOn(boardObj, 'processFlagClick').and.callThrough();
   });
 
   afterEach(function () {
@@ -23,8 +23,8 @@ describe('testObj', function() {
       preventDefault: jasmine.createSpy(),
       stopPropagation: jasmine.createSpy()
     };
-    
-    result = testObj.detectRightClick(event);
+
+    result = boardObj.detectRightClick(event);
 
     expect(event.preventDefault).toHaveBeenCalled
     expect(event.stopPropagation).toHaveBeenCalled
@@ -32,21 +32,22 @@ describe('testObj', function() {
   });
 
   it("parses the id of the cell and returns an integer", function(){
-    var result = testObj.getClickedCellId('submit_24');
+    var result = boardObj.getClickedCellId('submit_24');
     expect(result).toEqual(jasmine.any(Number));
   });
 
   it("updates the right-clicked form to submit flag content", function(){
     var form = document.forms[24];
-    testObj.updateForm(24);
+    boardObj.updateForm(24);
     var field = form['content'].value;
     expect(field).toEqual('F');
   });
 
   it("submits the form", function(){
     var form = document.forms[32];
+    form.addEventListener("submit", function(event) {return false;});
     spyOn(form, 'submit').and.callThrough();
-    testObj.submitForm(32);
+    boardObj.submitForm(32);
     expect(form.submit).toHaveBeenCalled();
   });
 

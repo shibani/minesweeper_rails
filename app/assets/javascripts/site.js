@@ -1,19 +1,17 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
-var testObj = {
+var boardObj = {
   processFlagClick: function(event) {
-    console.log(event);
-    var result = testObj.detectRightClick(event);
-    id = testObj.getClickedCellId(result);
-    testObj.updateForm(id);
-    testObj.submitForm(id);
+    var result = boardObj.detectRightClick(event);
+    id = boardObj.getClickedCellId(result);
+    boardObj.updateForm(id);
+    boardObj.submitForm(id);
   },
 
   detectRightClick: function(ev){
     ev.preventDefault();
     ev.stopPropagation();
-    alert(ev.target.id);
     return ev.target.id;
   },
 
@@ -36,6 +34,5 @@ var testObj = {
 document.addEventListener('DOMContentLoaded', function() {
   var formContainer = document.querySelector(".form-container");
 
-  formContainer.addEventListener('contextmenu', testObj.processFlagClick, false);
-
+  formContainer.addEventListener('contextmenu', boardObj.processFlagClick, false);
 });

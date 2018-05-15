@@ -70,6 +70,8 @@ RSpec.describe SiteController, type: :controller do
 
     params3 = { 'content': 'B', 'index': '0', 'rowsize'=>'4', 'positions': 'B,1,X,X,0,0,1,2,B,1,2,2,0,0,0,0'}
 
+    params4 = { 'content': 'F', 'index': '1', 'rowsize'=>'4', 'positions': 'BF,1,X,X,0,0,1,2,B,1,2,2,0,0,0,0'}
+
     it 'returns a 200 OK status' do
       post :update, params: params
       expect(response).to have_http_status(:ok)
@@ -83,10 +85,10 @@ RSpec.describe SiteController, type: :controller do
     it 'marks the move if position is not a bomb' do
       post :update, params: params2
       row_array = [
-        [[0, 'B', ' '], [1, '1', '1'], [2, 'X', 'X'], [3, 'X', 'X']],
-        [[4, '0', '0'], [5, '0', '0'], [6, '1', '1'], [7, '2', '2']],
-        [[8, 'B', ' '], [9, '1', '1'], [10, '2', '2'], [11, 'X', 'X']],
-        [[12, '0', '0'], [13, '0', '0'], [14, '0', '0'], [15, '0', '0']]
+        [[0, 'B', '  '], [1, '1', '1 '], [2, 'X', 'X '], [3, 'X', 'X ']],
+        [[4, '0', '0 '], [5, '0', '0 '], [6, '1', '1 '], [7, '2', '2 ']],
+        [[8, 'B', '  '], [9, '1', '1 '], [10, '2', '2 '], [11, 'X', 'X ']],
+        [[12, '0', '0 '], [13, '0', '0 '], [14, '0', '0 '], [15, '0', '0 ']]
       ]
       expect(assigns(:board)).to eq(row_array)
     end
@@ -100,10 +102,10 @@ RSpec.describe SiteController, type: :controller do
     it 'shows the bombs if move is a bomb' do
       post :update, params: params3
       row_array = [
-        [[0, 'B', "\u{1f4a3}"], [1, '1', '1'], [2, 'X', 'X'], [3, 'X', 'X']],
-        [[4, '0', '0'], [5, '0', '0'], [6, '1', '1'], [7, '2', '2']],
-        [[8, 'B', "\u{1f4a3}"], [9, '1', '1'], [10, '2', '2'], [11, '2', '2']],
-        [[12, '0', '0'], [13, '0', '0'], [14, '0', '0'], [15, '0', '0']]
+        [[0, 'B', "\u{1f4a3}"], [1, '1', '1 '], [2, 'X', 'X '], [3, 'X', 'X ']],
+        [[4, '0', '0 '], [5, '0', '0 '], [6, '1', '1 '], [7, '2', '2 ']],
+        [[8, 'B', "\u{1f4a3}"], [9, '1', '1 '], [10, '2', '2 '], [11, '2', '2 ']],
+        [[12, '0', '0 '], [13, '0', '0 '], [14, '0', '0 '], [15, '0', '0 ']]
       ]
       expect(assigns(:board)).to eq(row_array)
     end
@@ -111,6 +113,17 @@ RSpec.describe SiteController, type: :controller do
     it 'shows the game over message' do
       post :update, params: params
       expect(assigns(:header)).to eq('Game over! You lose.')
+    end
+
+    it 'can post a flag as a move' do
+      post :update, params: params4
+      row_array = [
+        [[0, 'BF', "\u{1f6a9}"], [1, '1F', "\u{1f6a9}"], [2, 'X', 'X '], [3, 'X', 'X ']],
+        [[4, '0', '0 '], [5, '0', '0 '], [6, '1', '1 '], [7, '2', '2 ']],
+        [[8, 'B', '  '], [9, '1', '1 '], [10, '2', '2 '], [11, '2', '2 ']],
+        [[12, '0', '0 '], [13, '0', '0 '], [14, '0', '0 '], [15, '0', '0 ']]
+      ]
+      expect(assigns(:board)).to eq(row_array)
     end
   end
 end

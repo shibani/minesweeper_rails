@@ -17,37 +17,61 @@ module Helpers
     positions.map { ' ' }
   end
 
-  def update_board(game, positions, move)
+  def board_config(game, positions)
     game.set_positions(positions)
     bomb_array = bomb_positions_in_string(positions)
     game.set_bomb_positions(bomb_array)
+  end
+
+  def update_board_with_move(game, move)
     game.mark_move_on_board(move)
-    game.board_positions
+  end
+
+  def update_board_with_flag(game, move)
+    game.mark_flag_on_board(move)
   end
 
   def bomb_positions_in_string(game_positions)
     game_positions.each_index.select { |i| game_positions[i] == 'B' }
   end
 
-  def build_board_view(board, row_size)
-    board.each_slice(row_size).map.with_index do |row, row_index|
+  def build_board_view(game, row_size)
+    game.board_formatter.show_bombs = nil
+    board_array = game.board_formatter.format_board_with_emoji(game.board)
+    game.board_positions.each_slice(row_size).map.with_index do |row, row_index|
       row.map.with_index do |cell, cell_index|
         cell_position = row_index * row_size + cell_index
         content = cell
-        submit_btn = cell != 'B' ? cell : ' '
+        # submit_btn = cell != 'B' ? cell : ' '
+        submit_btn = board_array[cell_position]
         [cell_position, content, submit_btn]
       end
     end
   end
 
-  def build_bomb_view(board, row_size)
-    board.each_slice(row_size).map.with_index do |row, row_index|
+  def build_bomb_view(game, row_size)
+    game.board_formatter.show_bombs = 'show'
+    board_array = game.board_formatter.format_board_with_emoji(game.board)
+    game.board_positions.each_slice(row_size).map.with_index do |row, row_index|
       row.map.with_index do |cell, cell_index|
         cell_position = row_index * row_size + cell_index
         content = cell
-        submit_btn = cell != 'B' ? cell : "\u{1f4a3}"
+        # submit_btn = cell != 'B' ? cell : ' '
+        submit_btn = board_array[cell_position]
         [cell_position, content, submit_btn]
       end
     end
+  end
+
+  def flag
+    "\u{1f6a9}"
+  end
+
+  def bomb
+    "\u{1f4a3}"
+  end
+
+  def trophy
+    "\u{1f3c6}"
   end
 end
