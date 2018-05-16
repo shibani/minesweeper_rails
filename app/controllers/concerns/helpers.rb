@@ -44,6 +44,34 @@ module Helpers
     end
   end
 
+  def is_won?(game)
+    all_non_bomb_positions_are_marked?(game) && all_bomb_positions_are_flagged?(game)
+  end
+
+  def all_non_bomb_positions_are_marked?(game)
+    board_size(game) - bomb_count(game) == move_count(game)
+  end
+
+  def all_bomb_positions_are_flagged?(game)
+    bomb_count(game) == flag_count(game)
+  end
+
+  def board_size(game)
+    game.board_positions.size
+  end
+
+  def bomb_count(game)
+    game.board_positions.select{ |el| el.include? 'B' }.length
+  end
+
+  def move_count(game)
+    game.board_positions.select{ |el| el == 'X' }.length
+  end
+
+  def flag_count(game)
+    game.board_positions.select{ |el| ['BF', 'FB'].include? el }.length
+  end
+
   def flag
     "\u{1f6a9}"
   end

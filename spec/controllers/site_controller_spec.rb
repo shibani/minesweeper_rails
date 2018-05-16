@@ -62,7 +62,7 @@ RSpec.describe SiteController, type: :controller do
   end
 
   describe 'update' do
-    params = { 'content': '0', 'index': '1', 'rowsize'=>'4', 'positions': ' ,B, , , , , , , , , , , , , , '}
+    params = { 'content': 'X', 'index': '1', 'rowsize'=>'4', 'positions': ' ,B, , , , , , , , , , , , , , '}
 
     params1 = { 'content': '0', 'index': '1', 'rowsize'=>'4', 'positions': ' , , , , , , , , , , , , , , , '}
 
@@ -71,6 +71,10 @@ RSpec.describe SiteController, type: :controller do
     params3 = { 'content': 'B', 'index': '0', 'rowsize'=>'4', 'positions': 'B,1,X,X,0,0,1,2,B,1,2,2,0,0,0,0'}
 
     params4 = { 'content': 'F', 'index': '1', 'rowsize'=>'4', 'positions': 'BF,1,X,X,0,0,1,2,B,1,2,2,0,0,0,0'}
+
+    params5 = { 'content': 'F', 'index': '1', 'rowsize'=>'5', 'positions': 'BF,B,X,X,X,X,X,X,BF,X,X,X,X,X,X,X,X,X,BF,X,X,X,X,BF,X'}
+
+    let (:game) {SiteController.create_game(5,5)}
 
     it 'returns a 200 OK status' do
       post :update, params: params
@@ -112,6 +116,7 @@ RSpec.describe SiteController, type: :controller do
 
     it 'shows the game over message' do
       post :update, params: params
+
       expect(assigns(:header)).to eq('Game over! You lose.')
     end
 
@@ -135,6 +140,14 @@ RSpec.describe SiteController, type: :controller do
         [[12, '0', '0 '], [13, '0', '0 '], [14, '0', '0 '], [15, '0', '0 ']]
       ]
       expect(assigns(:board)).to eq(row_array)
+    end
+
+    it 'can check if the game is won' do
+      positions = 'BF,BF,X,X,X,X,X,X,BF,X,X,X,X,X,X,X,X,X,BF,X,X,X,X,BF,X'.split(",")
+      SiteController.board_config(game, positions)
+      post :update, params: params5
+
+      expect(assigns(:header)).to eq('Game over! You win!')
     end
   end
 end

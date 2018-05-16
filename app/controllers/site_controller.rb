@@ -26,10 +26,16 @@ class SiteController < ApplicationController
     elsif move == 'flag'
       update_board_with_flag(game, user_move)
     end
+    game.game_over = true if is_won?(game)
     if game.game_over
-      @board = build_board_view(game, @rowsize, "show")
+      if is_won?(game)
+        @header = ui.show_game_over_message('win')
+        @board = build_board_view(game, @rowsize, 'won')
+      else
+        @header = ui.show_game_over_message('lose')
+        @board = build_board_view(game, @rowsize, 'show')
+      end
       @disable_submit = true
-      @header = ui.show_game_over_message('lose')
     else
       @board = build_board_view(game, @rowsize, nil)
       @disable_submit = false
