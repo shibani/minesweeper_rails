@@ -13,10 +13,6 @@ module Helpers
     ui.welcome.tr('=', ' ')
   end
 
-  def setup_board(positions)
-    positions.map { ' ' }
-  end
-
   def board_config(game, positions)
     game.set_positions(positions)
     bomb_array = bomb_positions_in_string(positions)
@@ -35,28 +31,13 @@ module Helpers
     game_positions.each_index.select { |i| game_positions[i] == 'B' }
   end
 
-  def build_board_view(game, row_size)
-    game.board_formatter.show_bombs = nil
+  def build_board_view(game, row_size, show_bombs=nil)
+    game.board_formatter.show_bombs = show_bombs
     board_array = game.board_formatter.format_board_with_emoji(game.board)
     game.board_positions.each_slice(row_size).map.with_index do |row, row_index|
       row.map.with_index do |cell, cell_index|
         cell_position = row_index * row_size + cell_index
         content = cell
-        # submit_btn = cell != 'B' ? cell : ' '
-        submit_btn = board_array[cell_position]
-        [cell_position, content, submit_btn]
-      end
-    end
-  end
-
-  def build_bomb_view(game, row_size)
-    game.board_formatter.show_bombs = 'show'
-    board_array = game.board_formatter.format_board_with_emoji(game.board)
-    game.board_positions.each_slice(row_size).map.with_index do |row, row_index|
-      row.map.with_index do |cell, cell_index|
-        cell_position = row_index * row_size + cell_index
-        content = cell
-        # submit_btn = cell != 'B' ? cell : ' '
         submit_btn = board_array[cell_position]
         [cell_position, content, submit_btn]
       end

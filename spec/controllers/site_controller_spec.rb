@@ -125,5 +125,16 @@ RSpec.describe SiteController, type: :controller do
       ]
       expect(assigns(:board)).to eq(row_array)
     end
+
+    it 'does not mark the position with a flag if position is a user_move' do
+      post :update, params: params4
+      row_array = [
+        [[0, 'BF', "\u{1f6a9}"], [1, '1F', "\u{1f6a9}"], [2, 'X', 'X '], [3, 'X', 'X ']],
+        [[4, '0', '0 '], [5, '0', '0 '], [6, '1', '1 '], [7, '2', '2 ']],
+        [[8, 'B', '  '], [9, '1', '1 '], [10, '2', '2 '], [11, '2', '2 ']],
+        [[12, '0', '0 '], [13, '0', '0 '], [14, '0', '0 '], [15, '0', '0 ']]
+      ]
+      expect(assigns(:board)).to eq(row_array)
+    end
   end
 end

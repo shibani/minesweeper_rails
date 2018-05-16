@@ -27,11 +27,11 @@ class SiteController < ApplicationController
       update_board_with_flag(game, user_move)
     end
     if game.game_over
-      @board = build_bomb_view(game, @rowsize)
+      @board = build_board_view(game, @rowsize, "show")
       @disable_submit = true
       @header = ui.show_game_over_message('lose')
     else
-      @board = build_board_view(game, @rowsize)
+      @board = build_board_view(game, @rowsize, nil)
       @disable_submit = false
     end
     @positions_to_string = game.board_positions.join(',')
