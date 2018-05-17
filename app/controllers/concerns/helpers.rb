@@ -28,7 +28,7 @@ module Helpers
   end
 
   def bomb_positions_in_string(game_positions)
-    game_positions.each_index.select { |i| game_positions[i] == 'B' }
+    game_positions.each_index.select { |i| game_positions[i].include? 'B' }
   end
 
   def build_board_view(game, row_size, show_bombs=nil)
@@ -44,32 +44,12 @@ module Helpers
     end
   end
 
-  def is_won?(game)
-    all_non_bomb_positions_are_marked?(game) && all_bomb_positions_are_flagged?(game)
+  def move_is_a_flag(params)
+    params == 'F'
   end
 
-  def all_non_bomb_positions_are_marked?(game)
-    board_size(game) - bomb_count(game) == move_count(game)
-  end
-
-  def all_bomb_positions_are_flagged?(game)
-    bomb_count(game) == flag_count(game)
-  end
-
-  def board_size(game)
-    game.board_positions.size
-  end
-
-  def bomb_count(game)
-    game.board_positions.select{ |el| el.include? 'B' }.length
-  end
-
-  def move_count(game)
-    game.board_positions.select{ |el| el == 'X' }.length
-  end
-
-  def flag_count(game)
-    game.board_positions.select{ |el| ['BF', 'FB'].include? el }.length
+  def move_is_a_bomb(params)
+    params.include? 'B'
   end
 
   def flag

@@ -14,21 +14,22 @@ class SiteController < ApplicationController
   end
 
   def update
-    move = params[:content] == 'F' ? 'flag' : 'move'
     game_positions = params[:positions].split(',')
     @rowsize = params[:rowsize].to_i
     user_move = params[:index].to_i
     game = create_game(@rowsize, 0)
     ui = create_interface
     board_config(game, game_positions)
-    if move == 'move'
-      update_board_with_move(game, user_move)
-    elsif move == 'flag'
+    if move_is_a_flag(params[:content])
       update_board_with_flag(game, user_move)
+    elsif move_is_a_bomb(params[:content])
+      game.game_over = true
+    else
+      update_board_with_move(game, user_move)
     end
-    game.game_over = true if is_won?(game)
+    game.game_over = true if game.is_won?
     if game.game_over
-      if is_won?(game)
+      if game.is_won?
         @header = ui.show_game_over_message('win')
         @board = build_board_view(game, @rowsize, 'won')
       else
