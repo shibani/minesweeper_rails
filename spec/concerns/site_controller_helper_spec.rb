@@ -89,63 +89,6 @@ RSpec.describe SiteController, type: :controller do
     expect("\u{1f3c6}").to eq(result)
   end
 
-  # it 'can return the board size' do
-  #   positions = 'BF,BF,X,X,X,X,X,X,BF,X,X,X,X,X,X,X,X,X,BF,X,X,X,X,BF,X'.split(",")
-  #   SiteController.board_config(game, positions)
-  #   result = SiteController.board_size(game)
-  #
-  #   expect(result).to eq(25)
-  # end
-  #
-  # it 'can return the bomb count' do
-  #   positions = 'BF,BF,X,X,X,X,X,X,BF,X,X,X,X,X,X,X,X,X,BF,X,X,X,X,BF,X'.split(",")
-  #   SiteController.board_config(game, positions)
-  #   result = SiteController.bomb_count(game)
-  #
-  #   expect(result).to eq(5)
-  # end
-  #
-  # it 'can return the move count' do
-  #   positions =
-  #   'BF,BF,X,X,X,X,X,X,BF,X,X,X,X,X,X,X,X,X,BF,X,X,X,X,BF,X'.split(",")
-  #   SiteController.board_config(game, positions)
-  #   result = SiteController.move_count(game)
-  #
-  #   expect(result).to eq(20)
-  # end
-  #
-  # it 'can return the flag count of accurately placed flags' do
-  #   positions = 'BF,BF,X,X,X,X,X,X,BF,X,X,X,X,X,X,X,X,X,BF,X,X,X,X,BF,X'.split(",")
-  #   SiteController.board_config(game, positions)
-  #   result = SiteController.flag_count(game)
-  #
-  #   expect(5).to eq(result)
-  # end
-  #
-  # it 'can return true if all non bomb positions are_marked' do
-  #   positions = 'BF,BF,X,X,X,X,X,X,BF,X,X,X,X,X,X,X,X,X,BF,X,X,X,X,BF,X'.split(",")
-  #   SiteController.board_config(game, positions)
-  #   result = SiteController.all_non_bomb_positions_are_marked?(game)
-  #
-  #   expect(result).to be(true)
-  # end
-  #
-  # it 'can return true if all bomb positions are flagged?' do
-  #   positions = 'BF,BF,X,X,X,X,X,X,BF,X,X,X,X,X,X,X,X,X,BF,X,X,X,X,BF,X'.split(",")
-  #   SiteController.board_config(game, positions)
-  #   result = SiteController.all_bomb_positions_are_flagged?(game)
-  #
-  #   expect(result).to be(true)
-  # end
-  #
-  # it 'can return true if the game is won' do
-  #   positions = 'BF,BF,X,X,X,X,X,X,BF,X,X,X,X,X,X,X,X,X,BF,X,X,X,X,BF,X'.split(",")
-  #   SiteController.board_config(game, positions)
-  #   result = SiteController.is_won?(game)
-  #
-  #   expect(result).to be(true)
-  # end
-
   it 'can check if user move is a flag' do
     params = 'F'
     result = SiteController.move_is_a_flag(params)
