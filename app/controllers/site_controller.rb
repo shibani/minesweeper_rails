@@ -7,7 +7,7 @@ class SiteController < ApplicationController
     game = create_game(10, 10)
     ui = create_interface
     @header = display_header(ui)
-    positions = game.board_positions
+    positions = game.board_positions.map{ |el| el.content }
     @positions_to_string = positions.join(',')
     @rowsize = game.row_size
     @board = build_board_view(game, @rowsize)
@@ -17,6 +17,7 @@ class SiteController < ApplicationController
     game_positions = params[:positions].split(',')
     @rowsize = params[:rowsize].to_i
     user_move = params[:index].to_i
+    content = params[:content]
     game = create_game(@rowsize, 0)
     ui = create_interface
     board_config(game, game_positions)
@@ -27,6 +28,9 @@ class SiteController < ApplicationController
     else
       update_board_with_move(game, user_move)
     end
+    # move = convert_params_to_move(user_move, content, @rowsize)
+    # game.place_move(move)
+
     game.game_over = true if game.is_won?
     if game.game_over
       if game.is_won?

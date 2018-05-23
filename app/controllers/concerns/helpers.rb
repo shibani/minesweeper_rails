@@ -19,6 +19,14 @@ module Helpers
     game.set_bomb_positions(bomb_array)
   end
 
+  # def convert_params_to_move(move, content, rowsize)
+  #   [
+  #     (move % rowsize).to_i,
+  #     (move / rowsize).to_i,
+  #     content == 'F' ? 'flag' : 'move'
+  #   ]
+  # end
+
   def update_board_with_move(game, move)
     game.mark_move_on_board(move)
   end
@@ -34,7 +42,7 @@ module Helpers
   def build_board_view(game, row_size, show_bombs=nil)
     game.board_formatter.show_bombs = show_bombs
     board_array = game.board_formatter.format_board_with_emoji(game.board)
-    game.board_positions.each_slice(row_size).map.with_index do |row, row_index|
+    game.board_positions(&:values).each_slice(row_size).map.with_index do |row, row_index|
       row.map.with_index do |cell, cell_index|
         cell_position = row_index * row_size + cell_index
         content = cell

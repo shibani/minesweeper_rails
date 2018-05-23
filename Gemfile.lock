@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/shibani/minesweeper_2pl
-  revision: 2fe872c6f90a6b635914c89aff3790794c95bd1e
+  revision: b9cf94ac173eff9118dec84f796e4b393095dc00
   branch: master
   specs:
     minesweeper_2pl (0.1.0)
