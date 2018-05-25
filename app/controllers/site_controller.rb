@@ -28,6 +28,9 @@ class SiteController < ApplicationController
     update_revealed_status(game, revealed_positions)
     move = convert_params_to_move(user_move, content, @rowsize)
     game.place_move(move)
+    logger.debug '*******'
+    logger.debug game.bomb_positions
+    logger.debug '*******'
     update_flag_status(game, flag_positions)
     game.game_over = true if game.is_won?
 

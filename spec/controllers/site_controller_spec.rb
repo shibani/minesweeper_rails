@@ -76,6 +76,8 @@ RSpec.describe SiteController, type: :controller do
 
     params6 = { 'content': 'F', 'index': '1', 'rowsize'=>'5', 'positions': 'B,B, , , , , , ,B, , , , , , , , , ,B, , , , ,B, ', 'revealed': '2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,19,20,21,22,24', 'flags': '0,8,18,23'}
 
+    params7 = { 'content': 'F', 'index': '1', 'rowsize'=>'5', 'flags': '1,2,3', 'positions': 'B,B,X,X,X,X,X,X,BF,X,X,X,X,X,X,X,X,X,BF,X,X,X,X,BF,X', 'revealed': '10,11,12'}
+
     let (:game) {SiteController.create_game(5,5)}
 
     it 'returns a 200 OK status' do
@@ -148,15 +150,6 @@ RSpec.describe SiteController, type: :controller do
       post :update, params: params6
 
       expect(assigns(:positions_to_reveal)).to include('18')
-    end
-
-    xit 'can update the flags' do
-      post :update, params: params5
-
-      expect(assigns(:board)[0][0][1]).to eq("\u{1f6a9}")
-    end
-
-    it 'can update the bomb positions to be revealed' do
     end
   end
 end

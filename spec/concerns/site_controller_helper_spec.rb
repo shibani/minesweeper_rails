@@ -28,13 +28,13 @@ RSpec.describe SiteController, type: :controller do
     expect(result).to match_array([0,8])
   end
 
-  # it 'can set the boards positions' do
-  #   positions = 'B,1,0,0,2,2,0,0,B,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0'.split(",")
-  #   SiteController.board_config(game, positions)
-  #   expected_array = ['B',1,0,0,2,2,0,0,'B',1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0]
-  #
-  #   expect(game.board_values).to match_array(expected_array)
-  # end
+  it 'can set the boards positions' do
+    positions = 'B, , , , , , , ,B, , , , , , , , , , , , , , , , '.split(",")
+    SiteController.board_config(game, positions)
+    expected_array = ['B', 1, 1, 1, 1, 1, 1, 1, 'B', 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    expect(game.board_values).to eq(expected_array)
+  end
 
   it 'can set the boards bomb positions' do
     positions = 'B,1,X,X,0,0,1,2,B,1,2,2,0,0,0,0'.split(",")
@@ -98,20 +98,61 @@ RSpec.describe SiteController, type: :controller do
   end
 
   it 'can convert params to a user move' do
-  end
+    move = 15
+    result = SiteController.convert_params_to_move(move, 'F', 5)
 
-  it 'can find the revealed cells if given the board' do
-  end
-
-  it 'can find the flags if given the board' do
+    expect(result).to eq([0,3,'flag'])
   end
 
   it 'can update the revealed status of cells on the board' do
+    cells_array = 'B,1,1,1,1,1,1,1,B,1,0,0,2,2,2,0,0,1,B,1,0,0,1,1,1'.split(",")
+    game = create_game(5,0)
+    board_config(game, cells_array)
+    to_reveal = '10,11,12,13,14'
+    update_revealed_status(game, to_reveal)
+
+    expect(game.board_positions[10].status).to eq('revealed')
+  end
+
+  it 'can find the revealed cells if given the board' do
+    cells_array = 'B,1,1,1,1,1,1,1,B,1,0,0,2,2,2,0,0,1,B,1,0,0,1,1,1'.split(",")
+    game = create_game(5,0)
+    board_config(game, cells_array)
+    to_reveal = '10,11,12,13,14'
+    update_revealed_status(game, to_reveal)
+    result = find_revealed(game.board_positions)
+
+    expect(result).to eq([10,11,12,13,14])
   end
 
   it 'can update the flag status of cells on the board' do
+    cells_array = 'B,1,1,1,1,1,1,1,B,1,0,0,2,2,2,0,0,1,B,1,0,0,1,1,1'.split(",")
+    game = create_game(5,0)
+    board_config(game, cells_array)
+    to_flag = '10,11,12,13,14'
+    update_flag_status(game, to_flag)
+
+    expect(game.board_positions[10].flag).to eq('F')
+  end
+
+  it 'can find the flagged cells if given the board' do
+    cells_array = 'B,1,1,1,1,1,1,1,B,1,0,0,2,2,2,0,0,1,B,1,0,0,1,1,1'.split(",")
+    game = create_game(5,0)
+    board_config(game, cells_array)
+    to_flag = '10,11,12,13,14'
+    update_flag_status(game, to_flag)
+    result = find_flags(game.board_positions)
+
+    expect(result).to eq([10,11,12,13,14])
   end
 
   it 'can update the bomb positions to be revealed' do
+    cells_array = 'B,1,1,1,1,1,1,1,B,1,0,0,2,2,2,0,0,1,B,1,0,0,1,1,1'.split(",")
+    game = create_game(5,0)
+    board_config(game, cells_array)
+    update_bombs_to_revealed(game)
+    bomb_positions = bomb_positions_in_string(cells_array)
+
+    expect(game.board_positions[bomb_positions.first].status).to eq('revealed')
   end
 end
