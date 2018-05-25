@@ -35,9 +35,9 @@ RSpec.describe SiteController, type: :controller do
 
     expect(game.board_values).to eq(expected_array)
   end
-
+  
   it 'can set the boards bomb positions' do
-    positions = 'B,1,X,X,0,0,1,2,B,1,2,2,0,0,0,0'.split(",")
+    positions = 'B,1, , ,0,0,1,2,B,1,2,2,0,0,0,0'.split(",")
     SiteController.board_config(game, positions)
 
     expect(game.bomb_positions).to match_array([0,8])
