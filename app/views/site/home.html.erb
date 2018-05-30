@@ -12,7 +12,9 @@
             <%= f.hidden_field :index, value: cell[0] %>
             <%= f.hidden_field :positions, value: @positions_to_string %>
             <%= f.hidden_field :rowsize, value: @rowsize %>
-            <%= f.submit cell[2], name: 'btnSubmit', class: "cell-submit", id: "submit_#{i*@rowsize + j}", data: { disable_with: false }, disabled: @disable_submit %>
+            <%= f.hidden_field :revealed, value: @positions_to_reveal %>
+            <%= f.hidden_field :flags, value: @flags %>
+            <%= f.submit cell[2], name: 'btnSubmit', class: cell[3], id: "submit_#{i*@rowsize + j}", data: { disable_with: false }, disabled: cell[4] || @disable_submit%>
             <% end %>
           </div><!-- end cell -->
         <% end %>
