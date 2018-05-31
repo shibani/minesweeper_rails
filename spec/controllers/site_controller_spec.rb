@@ -157,11 +157,11 @@ RSpec.describe SiteController, type: :controller do
       expect(assigns(:positions_to_reveal)).to include('10')
     end
 
-    it 'can send the flags to the board' do
-      post :update, params: params6
-
-      expect(assigns(:positions_to_reveal)).to include('18')
-    end
+    # it 'can send the flags to the board' do
+    #   post :update, params: params6
+    #
+    #   expect(assigns(:positions_to_reveal)).to include('18')
+    # end
 
     it 'can check if the game is over' do
       post :update, params: params8
