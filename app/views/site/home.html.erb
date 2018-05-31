@@ -6,7 +6,7 @@
       <% @board.each.with_index do |row, i| %>
         <div class="row">
         <% row.each.with_index do |cell, j| %>
-          <div class='cell <%= "cell_#{i*@rowsize + j}" %>'>
+          <div class='cell <%= "cell_#{i*@rowsize + j} #{cell[4]}" %>'>
             <%= form_with url: site_home_path do |f|%>
             <%= f.hidden_field :content, value: cell[1] %>
             <%= f.hidden_field :index, value: cell[0] %>
@@ -14,7 +14,8 @@
             <%= f.hidden_field :rowsize, value: @rowsize %>
             <%= f.hidden_field :revealed, value: @positions_to_reveal %>
             <%= f.hidden_field :flags, value: @flags %>
-            <%= f.submit cell[2], name: 'btnSubmit', class: cell[3], id: "submit_#{i*@rowsize + j}", data: { disable_with: false }, disabled: cell[4] || @disable_submit%>
+            <%= f.submit cell[1], name: 'btnSubmit', class: cell[2], id: "submit_#{i*@rowsize + j}", data: { disable_with: false }, disabled: cell[3] || @disable_submit%>
+            <div></div>
             <% end %>
           </div><!-- end cell -->
         <% end %>

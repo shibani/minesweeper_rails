@@ -72,13 +72,16 @@ RSpec.describe SiteController, type: :controller do
 
     params4 = { 'content': 'F', 'index': '1', 'rowsize'=>'4', 'positions': 'BF,1, , ,0,0,1,2,B,1,2,2,0,0,0,0'}
 
-    params5 = { 'content': 'F', 'index': '1', 'rowsize'=>'5', 'positions': 'B,B, , , , , , ,B, , , , , , , , , ,B, , , , ,B, ', 'revealed': '1'}
+    params5 = { 'content': 'F', 'index': '3', 'rowsize'=>'5', 'positions': 'B,B, , , , , , ,B, , , , , , , , , ,B, , , , ,B, '}
 
     params6 = { 'content': 'F', 'index': '1', 'rowsize'=>'5', 'positions': 'B,B, , , , , , ,B, , , , , , , , , ,B, , , , ,B, ', 'revealed': '2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,19,20,21,22,24', 'flags': '0,8,18,23'}
 
     params7 = { 'content': 'F', 'index': '1', 'rowsize'=>'5', 'flags': '1,2,3', 'positions': 'B,B, , , , , , ,B, , , , , , , , , ,B, , , , ,B, ', 'revealed': '10,11,12'}
 
-    params8 = { 'content': 'F', 'index': '1', 'rowsize'=>'5', 'flags': '0,1,8,18,23', 'positions': 'B,B, , , , , , ,B, , , , , , , , , ,B, , , , ,B, ', 'revealed': '10,11,12'}
+    params8 = { 'content': 'F', 'index': '1', 'rowsize'=>'5', 'flags': '0,8,18,23', 'positions': 'B,B,1, , , , , ,B, , , , , , , , , ,B, , , , ,B, ',
+    'revealed': '10,11,12'}
+
+    params9 = { 'content': 'F', 'index': '3', 'rowsize'=>'5', 'positions': 'B,B, , , , , , ,B, , , , , , , , , ,B, , , , ,B, ', 'revealed':'3'}
 
     let (:game) {SiteController.create_game(5,5)}
 
@@ -94,20 +97,20 @@ RSpec.describe SiteController, type: :controller do
 
     it 'marks the move if position is not a bomb' do
       post :update, params: params2
-      array = [11, '0 ', '0 ', 'cell-submit active', true]
+      array = [11, '0 ', 'cell-submit active', true, nil]
       expect(assigns(:board)[2][3]).to eq(array)
     end
 
     it 'marks the move if position is not a bomb v2' do
       post :update, params: params2
 
-      expect(assigns(:positions_to_string)).to eq('B,1,0,0,2,2,0,0,B,1,0,0,1,1,0,0')
+      expect(assigns(:positions_to_string)).to eq('8,1,0,0,2,2,0,0,8,1,0,0,1,1,0,0')
     end
 
     it 'shows the bombs if move is a bomb' do
       post :update, params: params3
 
-      cell_array = [0, "\u{1f4a3}", "\u{1f4a3}", 'cell-submit active', true]
+      cell_array = [0, "\u{1f4a3}", 'cell-submit active', true, nil]
       expect(assigns(:board)[0][0]).to eq(cell_array)
     end
 
@@ -119,15 +122,21 @@ RSpec.describe SiteController, type: :controller do
 
     it 'can post a flag as a move' do
       post :update, params: params4
-      cell_array = [1, "\u{1f6a9}", "\u{1f6a9}", 'cell-submit', false]
+      cell_array = [1, "\u{1f6a9}", 'cell-submit', false, nil]
 
       expect(assigns(:board)[0][1]).to eq(cell_array)
     end
 
-    it 'does not mark the position with a flag if position is revealed' do
+    it 'marks the position with a flag if position is not revealed' do
       post :update, params: params5
-      cell_array = [ 1, '  ', '  ', 'cell-submit active', true]
-      expect(assigns(:board)[0][1]).to eq(cell_array)
+      cell_array = [3, "\u{1f6a9}", 'cell-submit', false, nil]
+      expect(assigns(:board)[0][3]).to eq(cell_array)
+    end
+
+    it 'does not mark the position with a flag if position is revealed' do
+      post :update, params: params9
+      cell_array = [3, '1 ', 'cell-submit active', true, nil]
+      expect(assigns(:board)[0][3]).to eq(cell_array)
     end
 
     it 'can check if the game is won' do
@@ -139,7 +148,7 @@ RSpec.describe SiteController, type: :controller do
     it 'can update the revealed positions' do
       post :update, params: params6
 
-      expect(assigns(:board)[2][0][3]).to include('active')
+      expect(assigns(:board)[2][0][2]).to include('active')
     end
 
     it 'can send the revealed positions to the board' do
@@ -152,6 +161,12 @@ RSpec.describe SiteController, type: :controller do
       post :update, params: params6
 
       expect(assigns(:positions_to_reveal)).to include('18')
+    end
+
+    it 'can check if the game is over' do
+      post :update, params: params8
+
+      expect(assigns(:header)).to eq('Game over! You win!')
     end
   end
 end

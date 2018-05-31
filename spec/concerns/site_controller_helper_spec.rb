@@ -35,24 +35,12 @@ RSpec.describe SiteController, type: :controller do
 
     expect(game.board_values).to eq(expected_array)
   end
-  
+
   it 'can set the boards bomb positions' do
     positions = 'B,1, , ,0,0,1,2,B,1,2,2,0,0,0,0'.split(",")
     SiteController.board_config(game, positions)
 
     expect(game.bomb_positions).to match_array([0,8])
-  end
-
-  it 'can update the board with a move' do
-    SiteController.update_board_with_move(game, 13)
-
-    expect(game.board_positions[13].status).to eq('revealed')
-  end
-
-  it 'can update the board with a flag' do
-    SiteController.update_board_with_flag(game, 20)
-
-    expect(game.board_positions[20].flag).to eq('F')
   end
 
   it 'can build an array for the board view' do
@@ -61,7 +49,7 @@ RSpec.describe SiteController, type: :controller do
     result = SiteController.build_board_view(game, game.row_size)
 
 
-    expected_array = [0,'  ', '  ', 'cell-submit', false]
+    expected_array = [0, '  ', 'cell-submit', false, nil]
     assert_equal(result[0][0], expected_array)
   end
 
@@ -154,5 +142,18 @@ RSpec.describe SiteController, type: :controller do
     bomb_positions = bomb_positions_in_string(cells_array)
 
     expect(game.board_positions[bomb_positions.first].status).to eq('revealed')
+  end
+
+  it 'can return a bomb emoji and a guessed-bomb class for each correctly-placed flag if the game is lost' do
+    cells_array = 'B,1,1,1,1,1,1,1,B,1,0,0,2,2,2,0,0,1,B,1,0,0,1,1,1'.split(",")
+    game = create_game(5,0)
+    board_config(game, cells_array)
+    to_flag = '0,8'
+    update_flag_status(game, to_flag)
+    update_bombs_to_revealed(game)
+    result = build_board_view(game, 5, 'show')
+
+    expect(result[1][3][1]).to eq("\u{1f4a3}")
+    expect(result[1][3][4]).to eq('guessed')
   end
 end

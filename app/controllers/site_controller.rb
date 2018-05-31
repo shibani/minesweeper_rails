@@ -8,7 +8,7 @@ class SiteController < ApplicationController
     ui = create_interface
     @header = display_header(ui)
     positions = game.board_positions.map{ |el| el.content }
-    @positions_to_string = positions.join(',')
+    @positions_to_string = positions.join(',').tr('B', '8')
     @rowsize = game.row_size
     @board = build_board_view(game, @rowsize)
     @positions_to_reveal = ''
@@ -16,7 +16,7 @@ class SiteController < ApplicationController
   end
 
   def update
-    game_positions = params[:positions].split(',')
+    game_positions = params[:positions].tr('8', 'B').split(',')
     @rowsize = params[:rowsize].to_i
     user_move = params[:index].to_i
     content = params[:content]
@@ -26,12 +26,9 @@ class SiteController < ApplicationController
     ui = create_interface
     board_config(game, game_positions)
     update_revealed_status(game, revealed_positions)
+    update_flag_status(game, flag_positions)
     move = convert_params_to_move(user_move, content, @rowsize)
     game.place_move(move)
-    logger.debug '*******'
-    logger.debug game.bomb_positions
-    logger.debug '*******'
-    update_flag_status(game, flag_positions)
     game.game_over = true if game.is_won?
 
     if game.game_over
@@ -49,7 +46,7 @@ class SiteController < ApplicationController
       @board = build_board_view(game, @rowsize, nil)
       @disable_submit = false
     end
-    @positions_to_string = game.board_values.join(',')
+    @positions_to_string = game.board_values.join(',').tr('B', '8')
     @positions_to_reveal = find_revealed(game.board_positions).join(',')
     @flags = find_flags(game.board_positions).join(',')
     render :home
