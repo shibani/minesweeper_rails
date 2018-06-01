@@ -27,20 +27,12 @@ module Helpers
     ]
   end
 
-  def update_board_with_move(game, move)
-    game.mark_move_on_board(move)
-  end
-
-  def update_board_with_flag(game, move)
-    game.mark_flag_on_board(move)
-  end
-
   def bomb_positions_in_string(game_positions)
     game_positions.each_index.select { |i| game_positions[i].include? 'B' }
   end
 
   def find_revealed(cells_array)
-    cells_array.each_index.select{ |i| cells_array[i].status == 'revealed' }
+    cells_array.each_index.select{ |i| cells_array[i].status == 'revealed'}
   end
 
   def find_flags(cells_array)
@@ -48,24 +40,22 @@ module Helpers
   end
 
   def update_revealed_status(game, revealed_positions)
-    unless revealed_positions.nil? || revealed_positions.empty?
-      revealed = revealed_positions.split(',').map(&:to_i)
-      game.set_cell_status(revealed)
-    end
+    return if (revealed_positions.nil? || revealed_positions.empty?)
+    revealed = revealed_positions.split(',').map(&:to_i)
+    game.set_cell_status(revealed)
   end
 
   def update_flag_status(game, flag_positions)
-    unless flag_positions.nil? || flag_positions.empty?
-      flags = flag_positions.split(',').map(&:to_i)
-      flags.each do |flag|
-        game.board_positions[flag].update_flag unless game.board_positions[flag].status == 'revealed'
-      end
+    return if (flag_positions.nil? || flag_positions.empty?)
+    flags = flag_positions.split(',').map(&:to_i)
+    flags.each do |flag|
+      game.board_positions[flag].update_flag
     end
   end
 
   def update_bombs_to_revealed(game)
     game.board_positions.each do |position|
-      position.update_cell_status if position.content == 'B'
+      position.update_cell_status if position.content.include? 'B'
     end
   end
 
@@ -75,12 +65,12 @@ module Helpers
     game.board_positions.each_slice(row_size).map.with_index do |row, row_index|
       row.map.with_index do |cell, cell_index|
         cell_position = row_index * row_size + cell_index
-        content = board_array[cell_position]
-        submit_btn = board_array[cell_position]
-        cell_class = game.board_positions[cell_position].status == 'revealed' ? 'cell-submit active' : 'cell-submit'
-        form_status =
-        game.board_positions[cell_position].status == 'revealed' ? true : false
-        [cell_position, content, submit_btn, cell_class, form_status]
+        submit_btn = board_array[cell_position] == 'BF' ? bomb : board_array[cell_position]
+        cell_class ='cell-submit'
+        cell_class += ' active' if cell.status == 'revealed'
+        form_class = 'guessed' if board_array[cell_position] == 'BF'
+        form_status = cell.status == 'revealed'
+        [cell_position, submit_btn, cell_class, form_status, form_class]
       end
     end
   end

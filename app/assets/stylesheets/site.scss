@@ -97,12 +97,23 @@ section.container{
       justify-content:center;
     }
     .cell{
-      //border: 1px solid #f3f3f3;
       width:40px;
       height:35px;
       display:flex;
       justify-content:center;
       align-items:center;
+
+      &.guessed{
+        position:relative;
+        &:before{
+          content: "🚩";
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 4px;
+          left: -2px;
+        }
+      }
 
       form{
           width:100%;
@@ -137,12 +148,6 @@ section.container{
 
           input.cell-submit[value="🏆"]{
             font-size:20px;
-          }
-
-          input.cell-submit[value="X"], input.cell-submit[value="X "]{
-            font-size:12px;
-            font-weight:bold;
-            color:#000;
           }
       }
     }
