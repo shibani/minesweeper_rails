@@ -21,4 +21,8 @@ RSpec.describe 'site/home.html.erb', type: :view do
   it 'should have cells' do
     expect(page).to have_tag('div', with: { class: 'cell' })
   end
+
+  it 'should have a new game link' do
+    expect(page).to have_link('New Game', class: 'reset' )
+  end
 end
