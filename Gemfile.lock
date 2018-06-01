@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/shibani/minesweeper_2pl
-  revision: fd5d97f3c2fad0571a81b76341b9265a9e52c54b
-  branch: master
+  revision: 567d62097d039f95cb9279feacbf308f370dc574
+  branch: feature/#157888163/reset-button
   specs:
     minesweeper_2pl (0.1.0)
 

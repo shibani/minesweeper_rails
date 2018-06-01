@@ -33,11 +33,11 @@ class SiteController < ApplicationController
 
     if game.game_over
       if game.is_won?
-        # update_bombs_to_revealed(game)
+        update_bombs_to_revealed(game)
         @header = ui.show_game_over_message('win')
         @board = build_board_view(game, @rowsize, 'won')
       else
-        # update_bombs_to_revealed(game)
+        update_bombs_to_revealed(game)
         @header = ui.show_game_over_message('lose')
         @board = build_board_view(game, @rowsize, 'show')
       end
