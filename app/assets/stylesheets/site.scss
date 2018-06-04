@@ -113,6 +113,17 @@ section.container{
         }
       }
 
+      &.tagged{
+        position:relative;
+        &:before{
+          content: "B";
+          position: absolute;
+          top: 4px;
+          right: 2px;
+          font-size:9px;
+        }
+      }
+
       form{
           width:100%;
           height:100%;

@@ -13,6 +13,7 @@ class SiteController < ApplicationController
     @board = build_board_view(game, @rowsize)
     @positions_to_reveal = ''
     @flags = ''
+    @query_string = params[:dev_mode]
   end
 
   def update
@@ -22,6 +23,7 @@ class SiteController < ApplicationController
     content = params[:content]
     revealed_positions = params[:revealed]
     flag_positions = params[:flags]
+    @query_string = params[:dev_mode]
     game = create_game(@rowsize, 0)
     ui = create_interface
     board_config(game, game_positions)
@@ -35,17 +37,18 @@ class SiteController < ApplicationController
       if game.is_won?
         update_bombs_to_revealed(game)
         @header = ui.show_game_over_message('win')
-        @board = build_board_view(game, @rowsize, 'won')
+        @board = build_board_view(game, 'won', nil)
       else
         update_bombs_to_revealed(game)
         @header = ui.show_game_over_message('lose')
-        @board = build_board_view(game, @rowsize, 'show')
+        @board = build_board_view(game, 'show', nil)
       end
       @disable_submit = true
     else
-      @board = build_board_view(game, @rowsize, nil)
+      @board = build_board_view(game, nil, @query_string)
       @disable_submit = false
     end
+
     @positions_to_string = game.board_values.join(',').tr('B', '8')
     @positions_to_reveal = find_revealed(game.board_positions).join(',')
     @flags = find_flags(game.board_positions).join(',')

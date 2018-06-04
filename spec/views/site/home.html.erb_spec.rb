@@ -25,4 +25,10 @@ RSpec.describe 'site/home.html.erb', type: :view do
   it 'should have a new game link' do
     expect(page).to have_link('New Game', class: 'reset' )
   end
+
+  it 'sends a query string to the view if one is present' do
+    visit '/site/home?dev_mode=true'
+
+    expect(page).to have_current_path(site_home_path(:dev_mode => 'true'))
+  end
 end

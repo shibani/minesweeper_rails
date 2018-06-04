@@ -59,18 +59,25 @@ module Helpers
     end
   end
 
-  def build_board_view(game, row_size, show_bombs=nil)
+  def build_board_view(game, show_bombs=nil, query_string=nil)
     game.board_formatter.show_bombs = show_bombs
     board_array = game.board_formatter.format_board_with_emoji(game.board)
-    game.board_positions.each_slice(row_size).map.with_index do |row, row_index|
+    game.board_positions.each_slice(game.row_size).map.with_index do |row, row_index|
       row.map.with_index do |cell, cell_index|
-        cell_position = row_index * row_size + cell_index
+        cell_position = row_index * game.row_size + cell_index
         submit_btn = board_array[cell_position] == 'BF' ? bomb : board_array[cell_position]
         cell_class ='cell-submit'
         cell_class += ' active' if cell.status == 'revealed'
-        form_class = 'guessed' if board_array[cell_position] == 'BF'
+        form_class = 'tagged' if (game.bomb_positions.include? cell_position) && (query_string == 'true')
+        form_class = 'guessed' if (board_array[cell_position] == 'BF') && (game.game_over == true)
         form_status = cell.status == 'revealed'
-        [cell_position, submit_btn, cell_class, form_status, form_class]
+        fields_hash = {}
+        fields_hash[:cell_position] = cell_position
+        fields_hash[:submit_btn] = submit_btn
+        fields_hash[:cell_class] = cell_class
+        fields_hash[:form_status] = form_status
+        fields_hash[:form_class] = form_class
+        fields_hash
       end
     end
   end

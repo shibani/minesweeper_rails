@@ -43,14 +43,12 @@ RSpec.describe SiteController, type: :controller do
     expect(game.bomb_positions).to match_array([0,8])
   end
 
-  it 'can build an array for the board view' do
+  it 'can build a hash for the board view' do
     positions = 'B,1,1,1,1,1,1,1,B,1,0,0,2,2,2,0,0,1,B,1,0,0,1,1,1'.split(",")
     SiteController.board_config(game, positions)
     result = SiteController.build_board_view(game, game.row_size)
 
-
-    expected_array = [0, '  ', 'cell-submit', false, nil]
-    assert_equal(result[0][0], expected_array)
+    assert_equal(result[0][0][:submit_btn], '  ')
   end
 
   it 'can return a flag' do
@@ -79,7 +77,7 @@ RSpec.describe SiteController, type: :controller do
   end
 
   it 'can check if user move is a bomb' do
-    params = 'FB'
+    params = 'BF'
     result = SiteController.move_is_a_bomb(params)
 
     expect(result).to be(true)
@@ -140,7 +138,7 @@ RSpec.describe SiteController, type: :controller do
     board_config(game, cells_array)
     update_bombs_to_revealed(game)
     bomb_positions = bomb_positions_in_string(cells_array)
-
+#
     expect(game.board_positions[bomb_positions.first].status).to eq('revealed')
   end
 
@@ -151,9 +149,22 @@ RSpec.describe SiteController, type: :controller do
     to_flag = '0,8'
     update_flag_status(game, to_flag)
     update_bombs_to_revealed(game)
-    result = build_board_view(game, 5, 'show')
+    game.game_over = true
 
-    expect(result[1][3][1]).to eq("\u{1f4a3}")
-    expect(result[1][3][4]).to eq('guessed')
+    result = build_board_view(game, 'show', nil)
+
+    expect(result[1][3][:submit_btn]).to eq("\u{1f4a3}")
+    expect(result[1][3][:form_class]).to eq('guessed')
+  end
+
+  it 'can send a class to the view to show bomb positions if developer mode is on' do
+    cells_array = 'B,1,1,1,1,1,1,1,B,1,0,0,2,2,2,0,0,1,B,1,0,0,1,1,1'.split(",")
+    game = create_game(5,0)
+    board_config(game, cells_array)
+    game.game_over = nil
+
+    result = build_board_view(game, nil, 'true')
+
+    expect(result[0][0][:form_class]).to eq('tagged')
   end
 end

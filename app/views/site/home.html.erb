@@ -6,15 +6,16 @@
       <% @board.each.with_index do |row, i| %>
         <div class="row">
         <% row.each.with_index do |cell, j| %>
-          <div class='cell <%= "cell_#{i*@rowsize + j} #{cell[4]}" %>'>
+          <div class='cell <%= "cell_#{i*@rowsize + j} #{cell[:form_class]}" %>'>
             <%= form_with url: site_home_path do |f|%>
-            <%= f.hidden_field :content, value: cell[1] %>
-            <%= f.hidden_field :index, value: cell[0] %>
+            <%= f.hidden_field :content, value: cell[:submit_btn] %>
+            <%= f.hidden_field :index, value: cell[:cell_position] %>
             <%= f.hidden_field :positions, value: @positions_to_string %>
             <%= f.hidden_field :rowsize, value: @rowsize %>
             <%= f.hidden_field :revealed, value: @positions_to_reveal %>
             <%= f.hidden_field :flags, value: @flags %>
-            <%= f.submit cell[1], name: 'btnSubmit', class: cell[2], id: "submit_#{i*@rowsize + j}", data: { disable_with: false }, disabled: cell[3] || @disable_submit%>
+            <%= f.hidden_field :dev_mode, value: @query_string %>
+            <%= f.submit cell[:submit_btn], name: 'btnSubmit', class: cell[:cell_class], id: "submit_#{i*@rowsize + j}", data: { disable_with: false }, disabled: cell[:form_status] || @disable_submit%>
             <div></div>
             <% end %>
           </div><!-- end cell -->
