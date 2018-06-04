@@ -6,7 +6,6 @@ include Helpers
 RSpec.describe SiteController, type: :controller do
   describe 'GET #home' do
     subject { get :home }
-
     it 'returns a 200 OK status' do
       expect(response).to have_http_status(:ok)
     end
@@ -35,30 +34,62 @@ RSpec.describe SiteController, type: :controller do
 '
       expect(Minesweeper::Messages.welcome).to eq(string)
     end
+  end
+
+  describe 'GET #new' do
+    subject { get :new }
+    it 'returns a 200 OK status' do
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'renders the new template' do
+      expect(subject).to render_template('new')
+    end
+
+    it 'responds to html by default' do
+      get :new
+      expect(response.content_type).to eq 'text/html'
+    end
+
+    it 'assigns a ui' do
+      ui = create_interface
+      get :new
+      expect(ui).to be(Minesweeper::Messages)
+    end
+
+    it 'sends the welcome message to the view' do
+      string = '
+===========================================
+           WELCOME TO MINESWEEPER
+===========================================
+
+'
+      expect(Minesweeper::Messages.welcome).to eq(string)
+    end
 
     it 'assigns game' do
       game = create_game(10, 10)
-      get :home
+      get :new
       expect(game).to be_instance_of(Minesweeper::Game)
     end
 
     it 'game has expected row_size' do
       game = create_game(10, 10)
-      get :home
+      get :new
 
       expect(game.row_size).to be(10)
     end
 
     it 'game has expected bomb_count' do
       game = create_game(10, 10)
-      get :home
+      get :new
 
       expect(game.bomb_count).to be(10)
     end
 
     it 'game has expected number of positions' do
       game = create_game(10, 10)
-      get :home
+      get :new
 
       expect(game.board_positions.size).to be(100)
     end
@@ -93,9 +124,9 @@ RSpec.describe SiteController, type: :controller do
       expect(response).to have_http_status(:ok)
     end
 
-    it 'renders the home template' do
+    it 'renders the new template' do
       post :update, params: params
-      expect(response).to render_template(:home)
+      expect(response).to render_template('site/new')
     end
 
     it 'marks the move if position is not a bomb' do

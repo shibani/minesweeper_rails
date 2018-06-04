@@ -4,6 +4,16 @@ class SiteController < ApplicationController
   include Helpers
 
   def home
+    ui = create_interface
+    @header = display_header(ui)
+
+    render 'site/home'
+  end
+
+  def game_config
+  end
+
+  def new
     game = create_game(10, 10)
     ui = create_interface
     @header = display_header(ui)
@@ -14,6 +24,8 @@ class SiteController < ApplicationController
     @positions_to_reveal = ''
     @flags = ''
     @query_string = params[:dev_mode]
+
+    render 'site/new'
   end
 
   def update
@@ -52,6 +64,7 @@ class SiteController < ApplicationController
     @positions_to_string = game.board_values.join(',').tr('B', '8')
     @positions_to_reveal = find_revealed(game.board_positions).join(',')
     @flags = find_flags(game.board_positions).join(',')
-    render :home
+
+    render 'site/new'
   end
 end

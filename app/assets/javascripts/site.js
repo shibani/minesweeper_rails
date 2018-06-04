@@ -32,7 +32,9 @@ var boardObj = {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  var formContainer = document.querySelector(".form-container");
+  var formContainer = document.querySelector("body.new .form-container") || document.querySelector("body.update .form-container");
 
-  formContainer.addEventListener('contextmenu', boardObj.processFlagClick, false);
+  if(formContainer){
+    formContainer.addEventListener('contextmenu', boardObj.processFlagClick, false);
+  }
 });

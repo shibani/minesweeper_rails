@@ -79,103 +79,165 @@ section.container{
   width: auto;
   margin: 100px auto;
   border: 0px;
-
   h1{
     height: 24px;
     margin: 30px auto;
+    color:#444;
   }
-
-  .form-container{
+}
+.home{
+  .hero-container img{
     width:420px;
     margin: 0 auto 30px auto;
+  }
 
-    .row{
-      width:100%;
-      display:flex;
-      justify-content:center;
+  .settings-container{
+    width:420px;
+    margin: 0 auto;
+
+    .field{
+      height:auto;
+      margin-bottom:20px;
+      input{
+        border-bottom:3px solid #444;
+        width:100%;
+        height:30px;
+        position:relative;
+        font-size: 16px;
+        color:#444;
+        text-align:center;
+
+        &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+          font-size:16px;
+          color:#999;
+          position:absolute;
+          top:10px;
+          text-align:left;
+        }
+        &::-moz-placeholder { /* Firefox 19+ */
+          font-size:16px;
+          color:#999;
+          position:absolute;
+          top:10px;
+          text-align:left;
+        }
+        &:-ms-input-placeholder { /* IE 10+ */
+          font-size:16px;
+          color:#999;
+          position:absolute;
+          top:10px;
+          text-align:left;
+        }
+        &:-moz-placeholder { /* Firefox 18- */
+          font-size:16px;
+          color:#999;
+          position:absolute;
+          top:10px;
+          text-align:left;
+        }
+
+        &#row_size{}
+        &#bomb_count{}
+      }
     }
-    .cell{
-      width:40px;
-      height:35px;
-      display:flex;
-      justify-content:center;
-      align-items:center;
+  }
 
-      &.guessed{
-        position:relative;
-        &:before{
-          content: "❌";
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          top: 4px;
-          left: 0px;
-        }
+}
+
+.new, .update{
+  section.container{
+    .form-container{
+      width:420px;
+      margin: 0 auto 30px auto;
+
+      .row{
+        width:100%;
+        display:flex;
+        justify-content:center;
       }
+      .cell{
+        width:40px;
+        height:35px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
 
-      &.tagged{
-        position:relative;
-        &:before{
-          content: "B";
-          position: absolute;
-          top: 4px;
-          right: 2px;
-          font-size:9px;
+        &.guessed{
+          position:relative;
+          &:before{
+            content: "❌";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 4px;
+            left: 0px;
+          }
         }
-      }
 
-      form{
-          width:100%;
-          height:100%;
+        &.tagged{
+          position:relative;
+          &:before{
+            content: "B";
+            position: absolute;
+            top: 4px;
+            right: 2px;
+            font-size:9px;
+          }
+        }
 
-          input.cell-submit{
+        form{
             width:100%;
             height:100%;
-            font-size:11px;
-            background-color: #f0f0f0;
-            border-left: 1px solid #fff;
-            border-top: 1px solid #fff;
-            border-right: 1px solid #e3e3e3;
-            border-bottom: 1px solid #e3e3e3;
 
-            &.active{
-              background-color: #e8e8e8;
-              border-left: 1px solid #d3d3d3;
-              border-top: 1px solid #d3d3d3;
-              border-right: 1px solid #f0f0f0;
-              border-bottom: 1px solid #d3d3d3;
+            input.cell-submit{
+              width:100%;
+              height:100%;
+              font-size:11px;
+              background-color: #f0f0f0;
+              border-left: 1px solid #fff;
+              border-top: 1px solid #fff;
+              border-right: 1px solid #e3e3e3;
+              border-bottom: 1px solid #e3e3e3;
+
+              &.active{
+                background-color: #e8e8e8;
+                border-left: 1px solid #d3d3d3;
+                border-top: 1px solid #d3d3d3;
+                border-right: 1px solid #f0f0f0;
+                border-bottom: 1px solid #d3d3d3;
+              }
             }
-          }
 
-          input.cell-submit[value="🚩"]{
-            font-size:20px;
-          }
+            input.cell-submit[value="🚩"]{
+              font-size:20px;
+            }
 
-          input.cell-submit[value="💣"]{
-            font-size:20px;
-          }
+            input.cell-submit[value="💣"]{
+              font-size:20px;
+            }
 
-          input.cell-submit[value="🏆"]{
-            font-size:20px;
-          }
+            input.cell-submit[value="🏆"]{
+              font-size:20px;
+            }
+        }
       }
     }
-  }
 
-  a.reset:link, a.reset:visited{
-    color:#a0a0a0;
-    border: 2px solid #b8b8b8;
-    display: inline-block;
-    padding: 20px 50px;
-    margin: 20px 0;
-    position: relative;
-    font-size:14px;
-    text-transform:uppercase;
-  }
+    a.reset:link, a.reset:visited{
+      color:#a0a0a0;
+      border: 2px solid #b8b8b8;
+      display: inline-block;
+      padding: 20px 50px;
+      margin: 20px 0;
+      position: relative;
+      font-size:14px;
+      text-transform:uppercase;
+    }
 
-  a.reset:hover, a.reset:active{
-    background-color: #e0e0e0;
-    border: 2px solid #e0e0e0;
-    color: #fff;
+    a.reset:hover, a.reset:active{
+      background-color: #e0e0e0;
+      border: 2px solid #e0e0e0;
+      color: #fff;
+    }
   }
 }
