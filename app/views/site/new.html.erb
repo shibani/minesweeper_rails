@@ -1,30 +1,31 @@
 <section class="container">
 
-  <h1><%= @header %></h1>
+  <h1 class=<%= @header_class %>><%= @header %></h1>
 
-  <div class="form-container">
-      <% @board.each.with_index do |row, i| %>
-        <div class="row">
-        <% row.each.with_index do |cell, j| %>
-          <div class='cell <%= "cell_#{i*@rowsize + j} #{cell[:form_class]}" %>'>
-            <%= form_with url: new_path do |f|%>
-            <%= f.hidden_field :content, value: cell[:submit_btn] %>
-            <%= f.hidden_field :index, value: cell[:cell_position] %>
-            <%= f.hidden_field :positions, value: @positions_to_string %>
-            <%= f.hidden_field :rowsize, value: @rowsize %>
-            <%= f.hidden_field :revealed, value: @positions_to_reveal %>
-            <%= f.hidden_field :flags, value: @flags %>
-            <%= f.hidden_field :dev_mode, value: @query_string %>
-            <%= f.submit cell[:submit_btn], name: 'btnSubmit', class: cell[:cell_class], id: "submit_#{i*@rowsize + j}", data: { disable_with: false }, disabled: cell[:form_status] || @disable_submit%>
-            <div></div>
-            <% end %>
-          </div><!-- end cell -->
+  <div class="main">
+    <div class="form-container">
+        <% @board.each.with_index do |row, i| %>
+          <div class="row">
+          <% row.each.with_index do |cell, j| %>
+            <div class='cell <%= "cell_#{i*@rowsize + j} #{cell[:form_class]}" %>'>
+              <%= form_with url: update_path do |f|%>
+              <%= f.hidden_field :content, value: cell[:submit_btn] %>
+              <%= f.hidden_field :index, value: cell[:cell_position] %>
+              <%= f.hidden_field :positions, value: @positions_to_string %>
+              <%= f.hidden_field :rowsize, value: @rowsize %>
+              <%= f.hidden_field :revealed, value: @positions_to_reveal %>
+              <%= f.hidden_field :flags, value: @flags %>
+              <%= f.hidden_field :dev_mode, value: @query_string %>
+              <%= f.submit cell[:submit_btn], name: 'btnSubmit', class: cell[:cell_class], id: "submit_#{i*@rowsize + j}", data: { disable_with: false }, disabled: cell[:form_status] || @disable_submit%>
+              <div></div>
+              <% end %>
+            </div><!-- end cell -->
+          <% end %>
+        </div><!-- end row -->
         <% end %>
-      </div><!-- end row -->
-      <% end %>
-  </div><!-- end form_container -->
+    </div><!-- end form_container -->
+</div><!-- end main -->
 
-  <!-- <button class="reset"></button> -->
-  <%= link_to 'New Game'.html_safe, home_path, class: 'reset' %>
+<%= link_to 'New Game'.html_safe, home_path, class: 'reset' %>
 
 </section>

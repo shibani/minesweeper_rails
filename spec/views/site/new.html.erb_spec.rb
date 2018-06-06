@@ -2,33 +2,37 @@
 
 require 'rails_helper'
 
-RSpec.describe 'site/new.html.erb', type: :view do
+RSpec.describe 'site/new.html.erb', type: :request do
   include RSpecHtmlMatchers
-  before { visit '/new' }
+  include Capybara::RSpecMatchers
 
   it 'should have welcome h1' do
-    expect(page).to have_content('WELCOME TO MINESWEEPER')
+    post "/home", params: {'row_size' => 5, 'bomb_count' => 3 }
+
+    expect(response.body).to have_selector('h1', :text => 'WELCOME TO MINESWEEPER')
   end
 
-  it 'should have a board with bombs' do
-    expect(page).to have_tag('input', value: 'B')
+  it 'should have rowsize x rowsize number of submit buttons' do
+    post "/home", params: {'row_size' => 5, 'bomb_count' => 3 }
+
+    expect(response.body).to have_css('input.cell-submit', count: 25)
   end
 
   it 'should have a form' do
-    expect(page).to have_tag('form')
+    post "/home", params: {'row_size' => 5, 'bomb_count' => 3 }
+
+    expect(response.body).to have_selector('form')
   end
 
   it 'should have cells' do
-    expect(page).to have_tag('div', with: { class: 'cell' })
+    post "/home", params: {'row_size' => 5, 'bomb_count' => 3 }
+
+    expect(response.body).to have_css('div.cell')
   end
 
   it 'should have a new game link' do
-    expect(page).to have_link('New Game', class: 'reset' )
-  end
+    post "/home", params: {'row_size' => 5, 'bomb_count' => 3 }
 
-  it 'sends a query string to the view if one is present' do
-    visit '/new?dev_mode=true'
-
-    expect(page).to have_current_path(new_path(:dev_mode => 'true'))
+    expect(response.body).to have_link('New Game', class: 'reset' )
   end
 end

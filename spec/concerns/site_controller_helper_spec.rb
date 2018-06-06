@@ -167,4 +167,15 @@ RSpec.describe SiteController, type: :controller do
 
     expect(result[0][0][:form_class]).to eq('tagged')
   end
+
+  it 'can mark a cell with a class to indicate it is a win position' do
+    cells_array = 'B,1,1,1,1,1,1,1,B,1,0,0,2,2,2,0,0,1,B,1,0,0,1,1,1'.split(",")
+    game = create_game(5,0)
+    board_config(game, cells_array)
+    game.game_over = true
+
+    result = build_board_view(game, 'won', nil)
+
+    expect(result[0][0][:form_class]).to eq('won')
+  end
 end

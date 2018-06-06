@@ -6,26 +6,28 @@ class SiteController < ApplicationController
   def home
     ui = create_interface
     @header = display_header(ui)
+    @query_string = params[:dev_mode]
 
-    render 'site/home'
-  end
-
-  def game_config
+    render :home
   end
 
   def new
-    game = create_game(10, 10)
+    row_size = params[:row_size].to_i
+    bomb_count = params[:bomb_count].to_i
+
+    game = create_game(row_size, bomb_count)
     ui = create_interface
     @header = display_header(ui)
     positions = game.board_positions.map{ |el| el.content }
     @positions_to_string = positions.join(',').tr('B', '8')
     @rowsize = game.row_size
+
     @board = build_board_view(game, @rowsize)
     @positions_to_reveal = ''
     @flags = ''
     @query_string = params[:dev_mode]
 
-    render 'site/new'
+    render :new
   end
 
   def update
@@ -47,6 +49,7 @@ class SiteController < ApplicationController
 
     if game.game_over
       if game.is_won?
+        @header_class = 'won'
         update_bombs_to_revealed(game)
         @header = ui.show_game_over_message('win')
         @board = build_board_view(game, 'won', nil)
@@ -65,6 +68,6 @@ class SiteController < ApplicationController
     @positions_to_reveal = find_revealed(game.board_positions).join(',')
     @flags = find_flags(game.board_positions).join(',')
 
-    render 'site/new'
+    render :new
   end
 end

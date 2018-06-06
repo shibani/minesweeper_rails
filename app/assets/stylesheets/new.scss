@@ -1,0 +1,119 @@
+.new, .update{
+  section.container{
+    .form-container{
+      display:inline-block;
+      width:auto;
+      margin: 0 auto 30px auto;
+
+      .row{
+        width:100%;
+        display:flex;
+        justify-content:center;
+      }
+      .cell{
+        width:40px;
+        height:35px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background-color: #f0f0f0;
+
+        &.guessed{
+          position:relative;
+          &:before{
+            content: "❌";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 4px;
+            left: 0px;
+          }
+        }
+
+        &.tagged{
+          position:relative;
+          &:before{
+            content: "B";
+            position: absolute;
+            top: 4px;
+            right: 2px;
+            font-size:9px;
+          }
+        }
+
+        @keyframes larger {
+          10% {
+            background-color:transparent;
+            border: 0px;
+              transform: scale(1.0);
+              -webkit-transform: scale(1.0);
+          }
+          33% {
+            background-color:transparent;
+            border: 0px;
+          }
+          50%{
+            background-color:transparent;
+            border: 0px;
+            transform: scale(3.0) rotateY(180deg);
+            -webkit-transform: scale(3.0) rotateY(180deg);
+          }
+          66% {
+            background-color:transparent;
+            border: 0px;
+            transform: rotateY(180deg);
+            -webkit-transform: rotateY(180deg);
+          }
+          90% {
+            background-color:transparent;
+            border: 0px;
+            transform: scale(1.0);
+            -webkit-transform: scale(1.0);
+          }
+        }
+
+
+        &.won input.cell-submit{
+          -webkit-animation: larger 1s linear;
+          animation: larger 1s linear;
+        }
+
+        form{
+            width:100%;
+            height:100%;
+
+            input.cell-submit{
+              width:100%;
+              height:100%;
+              font-size:11px;
+              background-color: #f0f0f0;
+              border-left: 1px solid #fff;
+              border-top: 1px solid #fff;
+              border-right: 1px solid #e3e3e3;
+              border-bottom: 1px solid #e3e3e3;
+
+              &.active{
+                background-color: #e8e8e8;
+                border-left: 1px solid #d3d3d3;
+                border-top: 1px solid #d3d3d3;
+                border-right: 1px solid #f0f0f0;
+                border-bottom: 1px solid #d3d3d3;
+              }
+            }
+
+            input.cell-submit[value="🚩"]{
+              font-size:20px;
+            }
+
+            input.cell-submit[value="💣"]{
+              font-size:20px;
+            }
+
+            input.cell-submit[value="🏆"]{
+              font-size:20px;
+            }
+        }
+      }
+    }
+  }
+}

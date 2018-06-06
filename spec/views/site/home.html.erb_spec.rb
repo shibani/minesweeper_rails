@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'site/new.html.erb', type: :view do
+RSpec.describe 'site/home.html.erb', type: :view do
   include RSpecHtmlMatchers
   before { visit '/home' }
 
@@ -25,5 +25,11 @@ RSpec.describe 'site/new.html.erb', type: :view do
   it 'should have a form that has a bomb count field' do
     expect(page).to have_field('bomb_count')
   end
-  
+
+  it 'sends a query string to the view if one is present' do
+    visit '/home?dev_mode=true'
+
+    expect(page).to have_current_path(home_path(:dev_mode => 'true'))
+  end
+
 end

@@ -10,7 +10,7 @@ module Helpers
   end
 
   def display_header(ui)
-    ui.welcome.tr('=', ' ')
+    ui.welcome.tr('=', ' ').strip
   end
 
   def board_config(game, positions)
@@ -65,12 +65,22 @@ module Helpers
     game.board_positions.each_slice(game.row_size).map.with_index do |row, row_index|
       row.map.with_index do |cell, cell_index|
         cell_position = row_index * game.row_size + cell_index
+
         submit_btn = board_array[cell_position] == 'BF' ? bomb : board_array[cell_position]
+
         cell_class ='cell-submit'
         cell_class += ' active' if cell.status == 'revealed'
-        form_class = 'tagged' if (game.bomb_positions.include? cell_position) && (query_string == 'true')
-        form_class = 'guessed' if (board_array[cell_position] == 'BF') && (game.game_over == true)
+
+        if (game.bomb_positions.include? cell_position) && (query_string == 'true')
+          form_class = 'tagged'
+        elsif (board_array[cell_position] == 'BF') && game.game_over
+          form_class = 'guessed'
+        elsif (board_array[cell_position] == trophy) && show_bombs == 'won'
+          form_class = 'won'
+        end
+
         form_status = cell.status == 'revealed'
+        
         fields_hash = {}
         fields_hash[:cell_position] = cell_position
         fields_hash[:submit_btn] = submit_btn

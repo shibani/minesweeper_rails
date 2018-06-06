@@ -37,7 +37,7 @@ RSpec.describe SiteController, type: :controller do
   end
 
   describe 'GET #new' do
-    subject { get :new }
+    subject { get :new, {params: {'row_size': '8', 'bomb_count': '4'} } }
     it 'returns a 200 OK status' do
       expect(response).to have_http_status(:ok)
     end
@@ -47,13 +47,13 @@ RSpec.describe SiteController, type: :controller do
     end
 
     it 'responds to html by default' do
-      get :new
+      get :new, {params: {'row_size': '8', 'bomb_count': '4'} }
       expect(response.content_type).to eq 'text/html'
     end
 
     it 'assigns a ui' do
       ui = create_interface
-      get :new
+      get :new, {params: {'row_size': '8', 'bomb_count': '4'} }
       expect(ui).to be(Minesweeper::Messages)
     end
 
@@ -69,27 +69,27 @@ RSpec.describe SiteController, type: :controller do
 
     it 'assigns game' do
       game = create_game(10, 10)
-      get :new
+      get :new, {params: {'row_size': '8', 'bomb_count': '4'} }
       expect(game).to be_instance_of(Minesweeper::Game)
     end
 
     it 'game has expected row_size' do
       game = create_game(10, 10)
-      get :new
+      get :new, {params: {'row_size': '8', 'bomb_count': '4'} }
 
       expect(game.row_size).to be(10)
     end
 
     it 'game has expected bomb_count' do
       game = create_game(10, 10)
-      get :new
+      get :new, {params: {'row_size': '8', 'bomb_count': '4'} }
 
       expect(game.bomb_count).to be(10)
     end
 
     it 'game has expected number of positions' do
       game = create_game(10, 10)
-      get :new
+      get :new, {params: {'row_size': '8', 'bomb_count': '4'} }
 
       expect(game.board_positions.size).to be(100)
     end

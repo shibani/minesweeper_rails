@@ -4,16 +4,21 @@
 
   <div class="hero-container">
     <%= image_tag("minesweeper-1") %>
+    <%= image_tag("bomb", class: "bomb") %>
   </div>
 
   <div class="settings-container">
-    <%= form_with url: home_path do |f|%>
+    <%= form_with url: new_path, method: 'post' do |f|%>
       <div class="field">
-        <%= f.number_field :row_size, placeholder: 'enter a row size between 4 and 20', :min => 4, :max => 20  %>
+        <%= f.label :row_size, 'row size:' %>
+        <%= f.number_field :row_size, placeholder: 'enter a row size ( min: 4, max: 20 )', :min => 4, :max => 20, required: true  %>
       </div>
       <div class="field">
-        <%= f.number_field :bomb_count, placeholder: 'enter a bomb count', :min => 4, :max => 20 %>
+        <%= f.label :bomb_count, 'bomb count:' %>
+        <%= f.number_field :bomb_count, placeholder: 'enter a bomb count', :min => 4, :max => 20, required: true %>
       </div>
+      <%= f.hidden_field :dev_mode, value: @query_string %>
+      <%= f.submit 'Play', name: 'submit', id:'settings-submit' %>
     <% end %>
   </div>
 
