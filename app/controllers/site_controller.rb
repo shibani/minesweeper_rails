@@ -45,7 +45,6 @@ class SiteController < ApplicationController
     update_flag_status(game, flag_positions)
     move = convert_params_to_move(user_move, content, @rowsize)
     game.place_move(move)
-    game.game_over = true if game.is_won?
 
     if game.game_over
       if game.is_won?
