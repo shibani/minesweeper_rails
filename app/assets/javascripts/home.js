@@ -18,7 +18,7 @@ var settingsObj = {
 
   updatePlaceholder: function(val, max){
     if( val >= 4 ){
-      document.getElementById('bomb_count').placeholder='enter a bomb count ( min: 1, max: ' + max + ' )';
+      document.getElementById('bomb_count').placeholder='enter a bomb count ( min: 4, max: ' + max + ' )';
     } else {
       document.getElementById('bomb_count').placeholder='enter a bomb count';
     }

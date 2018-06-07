@@ -1,5 +1,7 @@
 .new, .update{
+
   section.container{
+
     .form-container{
       display:inline-block;
       width:auto;
@@ -10,6 +12,7 @@
         display:flex;
         justify-content:center;
       }
+
       .cell{
         width:40px;
         height:35px;
@@ -41,41 +44,9 @@
           }
         }
 
-        @keyframes larger {
-          10% {
-            background-color:transparent;
-            border: 0px;
-              transform: scale(1.0);
-              -webkit-transform: scale(1.0);
-          }
-          33% {
-            background-color:transparent;
-            border: 0px;
-          }
-          50%{
-            background-color:transparent;
-            border: 0px;
-            transform: scale(3.0) rotateY(180deg);
-            -webkit-transform: scale(3.0) rotateY(180deg);
-          }
-          66% {
-            background-color:transparent;
-            border: 0px;
-            transform: rotateY(180deg);
-            -webkit-transform: rotateY(180deg);
-          }
-          90% {
-            background-color:transparent;
-            border: 0px;
-            transform: scale(1.0);
-            -webkit-transform: scale(1.0);
-          }
-        }
-
-
         &.won input.cell-submit{
-          -webkit-animation: larger 1s linear;
-          animation: larger 1s linear;
+          -webkit-animation: trophies 1s linear;
+          animation: trophies 1s linear;
         }
 
         form{
@@ -114,6 +85,74 @@
             }
         }
       }
+    }
+    
+    h1.won{
+      opacity:0;
+      -webkit-animation: fadeIn 2s 1 linear forwards, growIn 2s 1 linear forwards;
+      animation: fadeIn 2s 1 linear forwards, growIn 2s 1 linear forwards;
+    }
+  }
+
+  @keyframes trophies {
+    10% {
+      background-color:transparent;
+      border: 0px;
+        transform: scale(1.0);
+        -webkit-transform: scale(1.0);
+    }
+    33% {
+      background-color:transparent;
+      border: 0px;
+    }
+    50%{
+      background-color:transparent;
+      border: 0px;
+      transform: scale(3.0) rotateY(180deg);
+      -webkit-transform: scale(3.0) rotateY(180deg);
+    }
+    66% {
+      background-color:transparent;
+      border: 0px;
+      transform: rotateY(180deg);
+      -webkit-transform: rotateY(180deg);
+    }
+    90% {
+      background-color:transparent;
+      border: 0px;
+      transform: scale(1.0);
+      -webkit-transform: scale(1.0);
+    }
+  }
+
+  @keyframes fadeIn{
+    0% {
+      opacity:0;
+    }
+
+    25% {
+      opacity:1;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes growIn{
+    0% {
+      transform: scale(1.0);
+      -webkit-transform: scale(1.0);
+    }
+
+    25% {
+      transform: scale(2.0);
+      -webkit-transform: scale(2.0);
+    }
+
+    50% {
+      transform: scale(1.0);
+      -webkit-transform: scale(1.0);
     }
   }
 }
