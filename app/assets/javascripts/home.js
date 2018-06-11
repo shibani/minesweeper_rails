@@ -6,7 +6,7 @@ var settingsObj = {
     settingsObj.updatePlaceholder(val, max);
   },
 
-  getRowSize: function(cellClick){
+  getRowSize: function(cellClickEvent){
     return cellClickEvent.target.value;
   },
 
