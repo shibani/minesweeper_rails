@@ -1,6 +1,6 @@
 var boardObj = {
   processFlagClick: function(rightClickEvent) {
-    var result = boardObj.detectRightClick(rightClick);
+    var result = boardObj.detectRightClick(rightClickEvent);
     id = boardObj.getClickedCellId(result);
     boardObj.updateForm(id);
     boardObj.submitForm(id);
