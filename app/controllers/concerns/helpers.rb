@@ -41,13 +41,13 @@ module Helpers
 
   def update_revealed_status(game, revealed_positions)
     return if (revealed_positions.nil? || revealed_positions.empty?)
-    revealed = revealed_positions.split(',').map(&:to_i)
+    revealed = convert_to_int_array(revealed_positions)
     game.set_cell_status(revealed)
   end
 
   def update_flag_status(game, flag_positions)
     return if (flag_positions.nil? || flag_positions.empty?)
-    flags = flag_positions.split(',').map(&:to_i)
+    flags = convert_to_int_array(flag_positions)
     flags.each do |flag|
       game.board_positions[flag].update_flag
     end
@@ -80,7 +80,7 @@ module Helpers
         end
 
         form_status = cell.status == 'revealed'
-        
+
         fields_hash = {}
         fields_hash[:cell_position] = cell_position
         fields_hash[:submit_btn] = submit_btn
@@ -90,6 +90,10 @@ module Helpers
         fields_hash
       end
     end
+  end
+
+  def convert_to_int_array(string)
+    string.split(',').map(&:to_i)
   end
 
   def move_is_a_flag(params)

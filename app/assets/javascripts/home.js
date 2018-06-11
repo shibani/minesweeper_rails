@@ -1,24 +1,24 @@
 var settingsObj = {
 
-  processUserInput: function(event){
-    var val = settingsObj.getRowSize(event);
+  processUserInput: function(evt){
+    var val = settingsObj.getRowSize(evt);
     var max = settingsObj.updateForm(val)
     settingsObj.updatePlaceholder(val, max);
   },
 
-  getRowSize: function(ev){
-    return ev.target.value;
+  getRowSize: function(evt){
+    return evt.target.value;
   },
 
   updateForm: function(val){
-    var bc = parseInt(val * val * 0.75).toString();
-    document.getElementById('bomb_count').max = bc;
-    return bc;
+    var bomb_count = parseInt(val * val * 0.75).toString();
+    document.getElementById('bomb_count').max = bomb_count;
+    return bomb_count;
   },
 
   updatePlaceholder: function(val, max){
     if( val >= 4 ){
-      document.getElementById('bomb_count').placeholder='enter a bomb count ( min: 4, max: ' + max + ' )';
+      document.getElementById('bomb_count').placeholder='enter a bomb count ( between 4 and ' + max + ' )';
     } else {
       document.getElementById('bomb_count').placeholder='enter a bomb count';
     }

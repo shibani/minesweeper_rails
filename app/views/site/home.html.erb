@@ -11,7 +11,7 @@
     <%= form_with url: new_path, method: 'post' do |f|%>
       <div class="field">
         <%= f.label :row_size, 'row size:' %>
-        <%= f.number_field :row_size, placeholder: 'enter a row size ( min: 4, max: 20 )', :min => 4, :max => 20, required: true  %>
+        <%= f.number_field :row_size, placeholder: 'enter a row size ( between 4 and 20 )', :min => 4, :max => 20, required: true  %>
       </div>
       <div class="field">
         <%= f.label :bomb_count, 'bomb count:' %>

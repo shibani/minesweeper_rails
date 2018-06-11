@@ -42,7 +42,7 @@ describe('settingsObj', function() {
     settingsObj.updatePlaceholder(val, max);
     var placeholderText = document.getElementById('bomb_count').placeholder;
 
-    expect(placeholderText).toEqual('enter a bomb count ( min: 4, max: 60 )');
+    expect(placeholderText).toEqual('enter a bomb count ( between 4 and 60 )');
   });
 
   it("does not display the form's bomb count placeholder text if the row size is less than the minimum", function(){
