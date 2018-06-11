@@ -18,13 +18,13 @@ describe('boardObj', function() {
   });
 
   it("returns the id of the cell that was clicked on", function(){
-    event = {
+    rightClickEvent = {
       target: {id: 'submit_6'},
       preventDefault: jasmine.createSpy(),
       stopPropagation: jasmine.createSpy()
     };
 
-    result = boardObj.detectRightClick(event);
+    result = boardObj.detectRightClick(rightClickEvent);
 
     expect(event.preventDefault).toHaveBeenCalled
     expect(event.stopPropagation).toHaveBeenCalled

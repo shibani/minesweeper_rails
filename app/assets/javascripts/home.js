@@ -1,13 +1,13 @@
 var settingsObj = {
 
-  processUserInput: function(evt){
-    var val = settingsObj.getRowSize(evt);
+  processUserInput: function(cellClickEvent){
+    var val = settingsObj.getRowSize(cellClickEvent);
     var max = settingsObj.updateForm(val)
     settingsObj.updatePlaceholder(val, max);
   },
 
-  getRowSize: function(evt){
-    return evt.target.value;
+  getRowSize: function(cellClick){
+    return cellClickEvent.target.value;
   },
 
   updateForm: function(val){

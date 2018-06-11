@@ -1,15 +1,15 @@
 var boardObj = {
-  processFlagClick: function(evt) {
-    var result = boardObj.detectRightClick(evt);
+  processFlagClick: function(rightClickEvent) {
+    var result = boardObj.detectRightClick(rightClick);
     id = boardObj.getClickedCellId(result);
     boardObj.updateForm(id);
     boardObj.submitForm(id);
   },
 
-  detectRightClick: function(evt){
-    evt.preventDefault();
-    evt.stopPropagation();
-    return evt.target.id;
+  detectRightClick: function(rightClickEvent){
+    rightClickEvent.preventDefault();
+    rightClickEvent.stopPropagation();
+    return rightClickEvent.target.id;
   },
 
   getClickedCellId: function(id){

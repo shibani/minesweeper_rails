@@ -17,11 +17,11 @@ describe('settingsObj', function() {
   });
 
   it("returns the value of the cell when it is updated", function(){
-    event = {
+    cellClickEvent = {
       target: {value: '4'}
     };
 
-    result = settingsObj.getRowSize(event);
+    result = settingsObj.getRowSize(cellClickEvent);
 
     expect(result).toContain(4);
   });
