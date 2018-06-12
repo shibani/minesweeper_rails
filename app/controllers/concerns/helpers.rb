@@ -49,7 +49,7 @@ module Helpers
     return if (flag_positions.nil? || flag_positions.empty?)
     flags = convert_to_int_array(flag_positions)
     flags.each do |flag|
-      game.board_positions[flag].update_flag
+      game.board_positions[flag].add_flag
     end
   end
 
@@ -60,8 +60,8 @@ module Helpers
   end
 
   def build_board_view(game, show_bombs=nil, query_string=nil)
-    game.board_formatter.show_bombs = show_bombs
-    board_array = game.board_formatter.format_board_with_emoji(game.board)
+    game.formatter.show_bombs = show_bombs
+    board_array = game.formatter.format_board_with_emoji(game.board)
     game.board_positions.each_slice(game.row_size).map.with_index do |row, row_index|
       row.map.with_index do |cell, cell_index|
         cell_position = row_index * game.row_size + cell_index

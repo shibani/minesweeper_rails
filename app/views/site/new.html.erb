@@ -16,7 +16,7 @@
               <%= f.hidden_field :revealed, value: @positions_to_reveal %>
               <%= f.hidden_field :flags, value: @flags %>
               <%= f.hidden_field :dev_mode, value: @query_string %>
-              <%= f.submit cell[:submit_btn], name: 'btnSubmit', class: cell[:cell_class], id: "submit_#{i*@rowsize + j}", data: { disable_with: false }, disabled: cell[:form_status] || @disable_submit%>
+              <%= f.submit cell[:submit_btn], name: 'btnSubmit', class: cell[:cell_class], id: "submit_#{i*@rowsize + j}", data: { disable_with: false }, disabled: cell[:form_status] || disable_submit %>
               <div></div>
               <% end %>
             </div><!-- end cell -->
