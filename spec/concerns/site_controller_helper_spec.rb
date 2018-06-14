@@ -1,7 +1,7 @@
 # frozen_string_literal:true
 
 require 'rails_helper'
-include Helpers
+include SiteControllerHelper
 
 RSpec.describe SiteController, type: :controller do
   let (:ui) {SiteController.create_interface}
@@ -142,7 +142,7 @@ RSpec.describe SiteController, type: :controller do
     expect(game.board_positions[bomb_positions.first].status).to eq('revealed')
   end
 
-  it 'can return a bomb emoji and a guessed-bomb class for each correctly-placed flag if the game is lost' do
+  it 'can return a bomb emoji for each correctly-placed flag if the game is lost' do
     cells_array = 'B,1,1,1,1,1,1,1,B,1,0,0,2,2,2,0,0,1,B,1,0,0,1,1,1'.split(",")
     game = create_game(5,0)
     board_config(game, cells_array)
@@ -154,28 +154,5 @@ RSpec.describe SiteController, type: :controller do
     result = build_board_view(game, 'show', nil)
 
     expect(result[1][3][:submit_btn]).to eq("\u{1f4a3}")
-    expect(result[1][3][:form_class]).to eq('guessed')
-  end
-
-  it 'can send a class to the view to show bomb positions if developer mode is on' do
-    cells_array = 'B,1,1,1,1,1,1,1,B,1,0,0,2,2,2,0,0,1,B,1,0,0,1,1,1'.split(",")
-    game = create_game(5,0)
-    board_config(game, cells_array)
-    game.game_over = nil
-
-    result = build_board_view(game, nil, 'true')
-
-    expect(result[0][0][:form_class]).to eq('tagged')
-  end
-
-  it 'can mark a cell with a class to indicate it is a win position' do
-    cells_array = 'B,1,1,1,1,1,1,1,B,1,0,0,2,2,2,0,0,1,B,1,0,0,1,1,1'.split(",")
-    game = create_game(5,0)
-    board_config(game, cells_array)
-    game.game_over = true
-
-    result = build_board_view(game, 'won', nil)
-
-    expect(result[0][0][:form_class]).to eq('won')
   end
 end

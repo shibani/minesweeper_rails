@@ -1,4 +1,4 @@
-module Helpers
+module SiteControllerHelper
   extend ActiveSupport::Concern
 
   def create_interface
@@ -60,33 +60,18 @@ module Helpers
   end
 
   def build_board_view(game, show_bombs=nil, query_string=nil)
+    @query_string = query_string
     game.formatter.show_bombs = show_bombs
-    board_array = game.formatter.format_board_with_emoji(game.board)
+    @board_array = game.formatter.format_board_with_emoji(game.board)
     game.board_positions.each_slice(game.row_size).map.with_index do |row, row_index|
       row.map.with_index do |cell, cell_index|
         cell_position = row_index * game.row_size + cell_index
 
-        submit_btn = board_array[cell_position] == 'BF' ? bomb : board_array[cell_position]
-
-        cell_class ='cell-submit'
-        cell_class += ' active' if cell.status == 'revealed'
-
-        if (game.bomb_positions.include? cell_position) && (query_string == 'true')
-          form_class = 'tagged'
-        elsif (board_array[cell_position] == 'BF') && game.game_over
-          form_class = 'guessed'
-        elsif (board_array[cell_position] == trophy) && show_bombs == 'won'
-          form_class = 'won'
-        end
-
-        form_status = cell.status == 'revealed'
+        submit_btn = @board_array[cell_position] == 'BF' ? bomb : @board_array[cell_position]
 
         fields_hash = {}
         fields_hash[:cell_position] = cell_position
         fields_hash[:submit_btn] = submit_btn
-        fields_hash[:cell_class] = cell_class
-        fields_hash[:form_status] = form_status
-        fields_hash[:form_class] = form_class
         fields_hash
       end
     end
@@ -105,14 +90,14 @@ module Helpers
   end
 
   def flag
-    "\u{1f6a9}"
+    "\u{1f6a9}" || "\u{1f364}"
   end
 
   def bomb
-    "\u{1f4a3}"
+    "\u{1f4a3}" || "\u{1f640}"
   end
 
   def trophy
-    "\u{1f3c6}"
+    "\u{1f3c6}" || "\u{1f63a}"
   end
 end

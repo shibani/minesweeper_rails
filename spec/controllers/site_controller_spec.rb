@@ -1,7 +1,7 @@
 # frozen_string_literal:true
 
 require 'rails_helper'
-include Helpers
+include SiteControllerHelper
 
 RSpec.describe SiteController, type: :controller do
   describe 'GET #home' do
@@ -133,10 +133,7 @@ RSpec.describe SiteController, type: :controller do
       post :update, params: params2
       hash = {
         cell_position: 11,
-        submit_btn: '0 ',
-        cell_class: 'cell-submit active',
-        form_status: true,
-        form_class: nil
+        submit_btn: '0 '
       }
       expect(assigns(:board)[2][3]).to eq(hash)
     end
@@ -151,10 +148,7 @@ RSpec.describe SiteController, type: :controller do
       post :update, params: params3
       cell_hash = {
         cell_position: 0,
-        submit_btn: "\u{1f4a3}",
-        cell_class: 'cell-submit active',
-        form_status: true,
-        form_class: nil
+        submit_btn: "\u{1f4a3}"
       }
 
       expect(assigns(:board)[0][0]).to eq(cell_hash)
@@ -170,10 +164,7 @@ RSpec.describe SiteController, type: :controller do
       post :update, params: params4
       cell_hash = {
         cell_position: 1,
-        submit_btn: "\u{1f6a9}",
-        cell_class: 'cell-submit',
-        form_status: false,
-        form_class: nil
+        submit_btn: "\u{1f6a9}"
       }
 
       expect(assigns(:board)[0][1]).to eq(cell_hash)
@@ -183,10 +174,7 @@ RSpec.describe SiteController, type: :controller do
       post :update, params: params5
       cell_hash = {
         cell_position: 3,
-        submit_btn: "\u{1f6a9}",
-        cell_class: 'cell-submit',
-        form_status: false,
-        form_class: nil
+        submit_btn: "\u{1f6a9}"
       }
 
       expect(assigns(:board)[0][3]).to eq(cell_hash)
@@ -197,10 +185,7 @@ RSpec.describe SiteController, type: :controller do
       cell_array = [3, '1 ', 'cell-submit active', true, nil]
       cell_hash = {
         cell_position: 3,
-        submit_btn: '1 ',
-        cell_class: 'cell-submit active',
-        form_status: true,
-        form_class: nil
+        submit_btn: '1 '
       }
 
       expect(assigns(:board)[0][3]).to eq(cell_hash)
@@ -210,12 +195,6 @@ RSpec.describe SiteController, type: :controller do
       post :update, params: params6
 
       expect(assigns(:header)).to eq('Game over! You win!')
-    end
-
-    it 'can update the revealed positions' do
-      post :update, params: params6
-
-      expect(assigns(:board)[2][0][:cell_class]).to include('active')
     end
 
     it 'can send the revealed positions to the board' do

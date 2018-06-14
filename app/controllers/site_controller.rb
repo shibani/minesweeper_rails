@@ -1,7 +1,7 @@
 # frozen_string_literal:true
 
 class SiteController < ApplicationController
-  include Helpers
+  include SiteControllerHelper
   include SiteHelper
 
   def home
