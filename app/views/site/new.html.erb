@@ -26,6 +26,18 @@
     </div><!-- end form_container -->
 </div><!-- end main -->
 
+<div class="game_play">
+  <p>OBJECTIVE - To guess which squares have bombs by flagging them.</p>
+  <p>WIN - The game is won when all bomb squares have been flagged.</p>
+  <p>LOSS - The game is lost when a bomb square is revealed before all bomb squares are flagged.</p>
+  <p>To play game - click on a square to reveal whether it's a bomb or an empty square.</p>
+  <p>If the revealed square is not a bomb, it will show weightings calculated according to how many bombs the square is adjacent to.  Therefore, a square marked 2 will have 2 bombs adjacent to it.</p>
+  <p>The point of the game is to use this information to guess which squares might be bombs.</p>
+  <p>A square can be 'marked' or 'flagged' as a bomb by right-clicking on it.</p>
+  <p>Right-clicking on it again will remove the flag.</p>
+  <p>A regular click on it will convert the flag into a move.</p>
+</div>
+
 <%= link_to 'New Game'.html_safe, home_path, class: 'reset' %>
 
 </section>
