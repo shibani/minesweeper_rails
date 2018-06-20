@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MinesweeperRails</title>
+  </head>
+
+  <body class='home'>
+    <section class="container">
+
+      <h1>WELCOME TO MINESWEEPER</h1>
+
+      <div class="hero-container">
+        <img src="/assets/minesweeper-1-f556650e0ff322fcf7a86979f26f7d4bea96a7e78a98364b899994d2a0755ffb.png" />
+      </div>
+
+      <div class="settings-container">
+        <form action="/home" accept-charset="UTF-8" data-remote="true" method="post">
+          <input name="utf8" type="hidden" value="&#x2713;" />
+          <div class="field">
+            <input placeholder="enter a row size between 4 and 20" min="4" max="20" type="number" name="row_size" id="row_size" />
+          </div>
+          <div class="field">
+            <input placeholder="enter a bomb count" min="4" max="20" type="number" name="bomb_count" id="bomb_count" />
+          </div>
+        </form>
+      </div>
+
+    </section>
+
+  </body>
+</html>

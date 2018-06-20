@@ -10,6 +10,8 @@ group :production do
   gem 'pg'
 end
 
+gem 'rails_12factor', group: :production
+
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
@@ -70,7 +72,7 @@ group :test, :development do
   gem 'teaspoon-jasmine'
 end
 
-gem 'minesweeper_2pl', git: 'https://github.com/shibani/minesweeper_2pl', branch: 'master'
+gem 'minesweeper_2pl', git: 'https://github.com/shibani/minesweeper_2pl', branch: 'feature/#158255601/cat-emoji-formatter'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 # gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

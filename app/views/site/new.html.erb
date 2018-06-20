@@ -1,0 +1,43 @@
+<section class="container">
+
+  <h1 class=<%= @header_class %>><%= @header %></h1>
+
+  <div class="main">
+    <div class="form-container">
+        <% @board.each.with_index do |row, i| %>
+          <div class="row">
+          <% row.each.with_index do |cell, j| %>
+            <div class='cell <%= "cell_#{cell_position(i,j)} #{form_class(cell_position(i,j))}" %>'>
+              <%= form_with url: update_path do |f|%>
+              <%= f.hidden_field :content, value: cell[:submit_btn] %>
+              <%= f.hidden_field :index, value: cell[:cell_position] %>
+              <%= f.hidden_field :positions, value: @positions_to_string %>
+              <%= f.hidden_field :rowsize, value: @rowsize %>
+              <%= f.hidden_field :revealed, value: @positions_to_reveal %>
+              <%= f.hidden_field :flags, value: @flags %>
+              <%= f.hidden_field :dev_mode, value: @query_string %>
+              <%= f.submit cell[:submit_btn], name: 'btnSubmit', class: cell_class(cell_position(i,j)), id: "submit_#{cell_position(i,j)}", data: { disable_with: false }, disabled: form_status(cell_position(i,j)) || disable_submit %>
+              <div></div>
+              <% end %>
+            </div><!-- end cell -->
+          <% end %>
+        </div><!-- end row -->
+        <% end %>
+    </div><!-- end form_container -->
+</div><!-- end main -->
+
+<div class="game_play">
+  <p>OBJECTIVE - To guess which squares have bombs by flagging them.</p>
+  <p>WIN - The game is won when all bomb squares have been flagged.</p>
+  <p>LOSS - The game is lost when a bomb square is revealed before all bomb squares are flagged.</p>
+  <p>To play game - click on a square to reveal whether it's a bomb or an empty square.</p>
+  <p>If the revealed square is not a bomb, it will show weightings calculated according to how many bombs the square is adjacent to.  Therefore, a square marked 2 will have 2 bombs adjacent to it.</p>
+  <p>The point of the game is to use this information to guess which squares might be bombs.</p>
+  <p>A square can be 'marked' or 'flagged' as a bomb by right-clicking on it.</p>
+  <p>Right-clicking on it again will remove the flag.</p>
+  <p>A regular click on it will convert the flag into a move.</p>
+</div>
+
+<%= link_to 'New Game'.html_safe, home_path, class: 'reset' %>
+
+</section>

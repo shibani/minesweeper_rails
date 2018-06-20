@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/shibani/minesweeper_2pl
-  revision: 567d62097d039f95cb9279feacbf308f370dc574
-  branch: master
+  revision: ae2281bc173c8e41be0736a1d9f7edb3d2390217
+  branch: feature/#158255601/cat-emoji-formatter
   specs:
     minesweeper_2pl (0.1.0)
 
@@ -133,6 +133,11 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.0.4)
       loofah (~> 2.2, >= 2.2.2)
+    rails_12factor (0.0.3)
+      rails_serve_static_assets
+      rails_stdout_logging
+    rails_serve_static_assets (0.0.5)
+    rails_stdout_logging (0.0.5)
     railties (5.2.0)
       actionpack (= 5.2.0)
       activesupport (= 5.2.0)
@@ -223,6 +228,7 @@ DEPENDENCIES
   puma (~> 3.11)
   rails (~> 5.2.0)
   rails-controller-testing
+  rails_12factor
   rspec-html-matchers
   rspec-rails (> 3.5.0, <= 3.7.0)
   sass-rails (~> 5.0)

@@ -1,12 +1,11 @@
 # frozen_string_literal:true
 
 require 'rails_helper'
-include Helpers
+include SiteControllerHelper
 
 RSpec.describe SiteController, type: :controller do
   describe 'GET #home' do
     subject { get :home }
-
     it 'returns a 200 OK status' do
       expect(response).to have_http_status(:ok)
     end
@@ -35,28 +34,63 @@ RSpec.describe SiteController, type: :controller do
 '
       expect(Minesweeper::Messages.welcome).to eq(string)
     end
+  end
+
+  describe 'GET #new' do
+    subject { get :new, {params: {'row_size': '8', 'bomb_count': '4'} } }
+    it 'returns a 200 OK status' do
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'renders the new template' do
+      expect(subject).to render_template('new')
+    end
+
+    it 'responds to html by default' do
+      get :new, {params: {'row_size': '8', 'bomb_count': '4'} }
+      expect(response.content_type).to eq 'text/html'
+    end
+
+    it 'assigns a ui' do
+      ui = create_interface
+      get :new, {params: {'row_size': '8', 'bomb_count': '4'} }
+      expect(ui).to be(Minesweeper::Messages)
+    end
+
+    it 'sends the welcome message to the view' do
+      string = '
+===========================================
+           WELCOME TO MINESWEEPER
+===========================================
+
+'
+      expect(Minesweeper::Messages.welcome).to eq(string)
+    end
 
     it 'assigns game' do
       game = create_game(10, 10)
-      get :home
+      get :new, {params: {'row_size': '8', 'bomb_count': '4'} }
       expect(game).to be_instance_of(Minesweeper::Game)
     end
 
     it 'game has expected row_size' do
       game = create_game(10, 10)
-      get :home
+      get :new, {params: {'row_size': '8', 'bomb_count': '4'} }
+
       expect(game.row_size).to be(10)
     end
 
     it 'game has expected bomb_count' do
       game = create_game(10, 10)
-      get :home
+      get :new, {params: {'row_size': '8', 'bomb_count': '4'} }
+
       expect(game.bomb_count).to be(10)
     end
 
     it 'game has expected number of positions' do
       game = create_game(10, 10)
-      get :home
+      get :new, {params: {'row_size': '8', 'bomb_count': '4'} }
+
       expect(game.board_positions.size).to be(100)
     end
   end
@@ -90,15 +124,18 @@ RSpec.describe SiteController, type: :controller do
       expect(response).to have_http_status(:ok)
     end
 
-    it 'renders the home template' do
+    it 'renders the new template' do
       post :update, params: params
-      expect(response).to render_template(:home)
+      expect(response).to render_template('site/new')
     end
 
     it 'marks the move if position is not a bomb' do
       post :update, params: params2
-      array = [11, '0 ', 'cell-submit active', true, nil]
-      expect(assigns(:board)[2][3]).to eq(array)
+      hash = {
+        cell_position: 11,
+        submit_btn: '0 '
+      }
+      expect(assigns(:board)[2][3]).to eq(hash)
     end
 
     it 'marks the move if position is not a bomb v2' do
@@ -109,9 +146,12 @@ RSpec.describe SiteController, type: :controller do
 
     it 'shows the bombs if move is a bomb' do
       post :update, params: params3
+      cell_hash = {
+        cell_position: 0,
+        submit_btn: "\u{1f4a3}"
+      }
 
-      cell_array = [0, "\u{1f4a3}", 'cell-submit active', true, nil]
-      expect(assigns(:board)[0][0]).to eq(cell_array)
+      expect(assigns(:board)[0][0]).to eq(cell_hash)
     end
 
     it 'shows the game over message' do
@@ -122,33 +162,39 @@ RSpec.describe SiteController, type: :controller do
 
     it 'can post a flag as a move' do
       post :update, params: params4
-      cell_array = [1, "\u{1f6a9}", 'cell-submit', false, nil]
+      cell_hash = {
+        cell_position: 1,
+        submit_btn: "\u{1f6a9}"
+      }
 
-      expect(assigns(:board)[0][1]).to eq(cell_array)
+      expect(assigns(:board)[0][1]).to eq(cell_hash)
     end
 
     it 'marks the position with a flag if position is not revealed' do
       post :update, params: params5
-      cell_array = [3, "\u{1f6a9}", 'cell-submit', false, nil]
-      expect(assigns(:board)[0][3]).to eq(cell_array)
+      cell_hash = {
+        cell_position: 3,
+        submit_btn: "\u{1f6a9}"
+      }
+
+      expect(assigns(:board)[0][3]).to eq(cell_hash)
     end
 
     it 'does not mark the position with a flag if position is revealed' do
       post :update, params: params9
       cell_array = [3, '1 ', 'cell-submit active', true, nil]
-      expect(assigns(:board)[0][3]).to eq(cell_array)
+      cell_hash = {
+        cell_position: 3,
+        submit_btn: '1 '
+      }
+
+      expect(assigns(:board)[0][3]).to eq(cell_hash)
     end
 
     it 'can check if the game is won' do
       post :update, params: params6
 
       expect(assigns(:header)).to eq('Game over! You win!')
-    end
-
-    it 'can update the revealed positions' do
-      post :update, params: params6
-
-      expect(assigns(:board)[2][0][2]).to include('active')
     end
 
     it 'can send the revealed positions to the board' do

@@ -2,28 +2,24 @@
 
   <h1><%= @header %></h1>
 
-  <div class="form-container">
-      <% @board.each.with_index do |row, i| %>
-        <div class="row">
-        <% row.each.with_index do |cell, j| %>
-          <div class='cell <%= "cell_#{i*@rowsize + j} #{cell[4]}" %>'>
-            <%= form_with url: site_home_path do |f|%>
-            <%= f.hidden_field :content, value: cell[1] %>
-            <%= f.hidden_field :index, value: cell[0] %>
-            <%= f.hidden_field :positions, value: @positions_to_string %>
-            <%= f.hidden_field :rowsize, value: @rowsize %>
-            <%= f.hidden_field :revealed, value: @positions_to_reveal %>
-            <%= f.hidden_field :flags, value: @flags %>
-            <%= f.submit cell[1], name: 'btnSubmit', class: cell[2], id: "submit_#{i*@rowsize + j}", data: { disable_with: false }, disabled: cell[3] || @disable_submit%>
-            <div></div>
-            <% end %>
-          </div><!-- end cell -->
-        <% end %>
-      </div><!-- end row -->
-      <% end %>
-  </div><!-- end form_container -->
+  <div class="hero-container">
+    <%= image_tag("minesweeper-1.png") %>
+    <%= image_tag("bomb.png", class: "bomb") %>
+  </div>
 
-  <!-- <button class="reset"></button> -->
-  <%= link_to 'New Game'.html_safe, site_home_path, class: 'reset' %>
+  <div class="settings-container">
+    <%= form_with url: new_path, method: 'post' do |f|%>
+      <div class="field">
+        <%= f.label :row_size, 'row size:' %>
+        <%= f.number_field :row_size, placeholder: 'enter a row size ( between 4 and 20 )', :min => 4, :max => 20, required: true  %>
+      </div>
+      <div class="field">
+        <%= f.label :bomb_count, 'bomb count:' %>
+        <%= f.number_field :bomb_count, placeholder: 'enter a bomb count', :min => 4, :max => 20, required: true %>
+      </div>
+      <%= f.hidden_field :dev_mode, value: @query_string %>
+      <%= f.submit 'Play', name: 'submit', id:'settings-submit' %>
+    <% end %>
+  </div>
 
 </section>
