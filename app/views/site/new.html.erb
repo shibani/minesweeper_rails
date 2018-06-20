@@ -2,6 +2,10 @@
 
   <h1 class=<%= @header_class %>><%= @header %></h1>
 
+  <div class="start-message">
+    <h2>Click on any square to begin</h2>
+  </div>
+
   <div class="main">
     <div class="form-container">
         <% @board.each.with_index do |row, i| %>
@@ -26,18 +30,26 @@
     </div><!-- end form_container -->
 </div><!-- end main -->
 
-<div class="game_play">
-  <p>OBJECTIVE - To guess which squares have bombs by flagging them.</p>
-  <p>WIN - The game is won when all bomb squares have been flagged.</p>
-  <p>LOSS - The game is lost when a bomb square is revealed before all bomb squares are flagged.</p>
-  <p>To play game - click on a square to reveal whether it's a bomb or an empty square.</p>
-  <p>If the revealed square is not a bomb, it will show weightings calculated according to how many bombs the square is adjacent to.  Therefore, a square marked 2 will have 2 bombs adjacent to it.</p>
-  <p>The point of the game is to use this information to guess which squares might be bombs.</p>
-  <p>A square can be 'marked' or 'flagged' as a bomb by right-clicking on it.</p>
-  <p>Right-clicking on it again will remove the flag.</p>
-  <p>A regular click on it will convert the flag into a move.</p>
-</div>
-
 <%= link_to 'New Game'.html_safe, home_path, class: 'reset' %>
+
+<div class="game_play">
+  <h2>GAME PLAY</h2>
+  <h3>OBJECTIVE</h3>
+  <p>To guess which squares have bombs by flagging them.</p>
+  <h3>WIN</h3>
+  <p>The game is won when all bomb squares have been flagged.</p>
+  <h3>LOSS</h3>
+  <p>The game is lost when a bomb square is revealed before all bomb squares are flagged.</p>
+  <h3>TO PLAY THE GAME</h3>
+  <p>1. Click on a square to reveal whether it's a bomb or an empty square.</p>
+  <p>2. If the revealed square is not a bomb, it will show weightings calculated according to the number of bombs the square is adjacent to.  Therefore, a square marked 2 will have 2 bombs adjacent to it.</p>
+  <p>3. The point of the game is to use this information to guess which squares might be bombs.</p>
+  <h3>TO FLAG</h3>
+  <p>Once you guess that a square might be a bomb it can be 'marked' or 'flagged' as a bomb by right-clicking on it.</p>
+  <h3>TO UNFLAG</h3>
+  <p>Right-clicking on a flagged square will remove the flag.</p>
+  <h3>NOTE:</h3>
+  <p>A regular click on a flagged square will convert the flag into a move.</p>
+</div>
 
 </section>

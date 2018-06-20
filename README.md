@@ -1,6 +1,6 @@
 # README
 
-minesweeper_rails is a rails application that runs a minesweeper game utilizing methods set up in the minesweeper_2pl gem.
+Minesweeper_rails is a rails application that runs a minesweeper game utilizing methods set up in the minesweeper_2pl gem.
 
 For more information on Minesweeper please visit: https://en.wikipedia.org/wiki/Minesweeper_(video_game)
 

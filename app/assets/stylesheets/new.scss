@@ -1,6 +1,15 @@
 .new, .update{
 
   section.container{
+    width: auto;
+    margin: 60px auto;
+    border: 0px;
+
+    h1{
+      height: 24px;
+      margin: 30px auto 0 auto;
+      color:#555;
+    }
 
     .form-container{
       display:inline-block;
@@ -86,11 +95,32 @@
         }
       }
     }
-    
+
     h1.won{
       opacity:0;
       -webkit-animation: fadeIn 2s 1 linear forwards, growIn 2s 1 linear forwards;
       animation: fadeIn 2s 1 linear forwards, growIn 2s 1 linear forwards;
+    }
+
+    .game_play{
+      width:400px;
+      text-align:left;
+      margin: 0 auto;
+
+      h2{
+        font-size:1em;
+        text-align:center;
+        text-transform: uppercase;
+        color: #666;
+      }
+
+      h3{
+        font-size:1em;
+        text-align:left;
+        text-transform: uppercase;
+        color: #666;
+        margin-top:10px;
+      }
     }
   }
 
@@ -153,6 +183,37 @@
     50% {
       transform: scale(1.0);
       -webkit-transform: scale(1.0);
+    }
+  }
+}
+
+.new{
+  .start-message{
+    height:23px;
+    margin-bottom:40px;
+
+    h2{
+      color: #888;
+      font-size:1em;
+      text-transform:uppercase;
+      letter-spacing:2.3px;
+      margin-bottom:40px;
+      font-weight:bold;
+      margin: 5px auto 0 auto;
+      width:308px;
+      border-top:1px solid #555;
+      padding-top:5px;
+    }
+  }
+}
+
+.update{
+  .start-message{
+    height:23px;
+    margin-bottom:45px;
+
+    h2{
+      display:none;
     }
   }
 }
