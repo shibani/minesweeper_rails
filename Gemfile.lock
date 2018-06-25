@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/shibani/minesweeper_2pl
+  revision: 59c9e68a23704a48bd6424267d21052458c661d8
+  branch: master
+  specs:
+    minesweeper_2pl (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -216,6 +223,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
+  minesweeper_2pl!
   pg
   puma (~> 3.11)
   rails (~> 5.2.0)
