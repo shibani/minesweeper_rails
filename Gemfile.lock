@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/shibani/minesweeper_2pl
-  revision: ae2281bc173c8e41be0736a1d9f7edb3d2390217
-  branch: feature/#158255601/cat-emoji-formatter
+  revision: 59c9e68a23704a48bd6424267d21052458c661d8
+  branch: master
   specs:
     minesweeper_2pl (0.1.0)
 

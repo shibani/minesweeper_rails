@@ -1,4 +1,24 @@
 .home{
+  .container{
+    width: auto;
+    margin: 60px auto;
+    border: 0px;
+
+    h1{
+      height: 24px;
+      margin: 30px auto 0 auto;
+      color:#555;
+    }
+
+    .start-message{
+      height:23px;
+      margin-bottom:45px;
+
+      h2{
+        display:none;
+      }
+    }
+  }
 
   .hero-container{
     position:relative;
