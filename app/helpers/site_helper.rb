@@ -2,7 +2,7 @@ module SiteHelper
 
   def header_class
     if @game.game_over
-      @header_class = 'won' if @game.is_won?
+      @header_class = @game.is_won? ? 'won' : ''
     end
   end
 
