@@ -28,3 +28,6 @@ To run locally:
 * How to run tests, in root directory
 - for Jasmine tests covering JS, run: `rake teaspoon`
 - for ruby tests covering the controller and view, run: `rspec`
+
+* TO DO IN THE FUTURE
+Extract the build_board_view method that formats the board for the browser out of the Rails app and move it into the Gem.
