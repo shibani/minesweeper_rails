@@ -29,5 +29,8 @@ To run locally:
 - for Jasmine tests covering JS, run: `rake teaspoon`
 - for ruby tests covering the controller and view, run: `rspec`
 
+* TO VIEW IN BROWSER, go to:
+https://minesweeper-sm.herokuapp.com/
+
 * TO DO IN THE FUTURE
 Extract the build_board_view method that formats the board for the browser out of the Rails app and move it into the Gem.
