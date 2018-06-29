@@ -5,8 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var rowSizeField = document.querySelector('body.home .settings-container #row_size');
 
-  var settingsForm = document.querySelector('body.home .settings-container form');
-
   if(formContainer){
     formContainer.addEventListener('contextmenu', boardObj.processFlagClick, false);
   }
